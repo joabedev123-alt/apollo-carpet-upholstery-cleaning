@@ -1,0 +1,19 @@
+{
+  "name": "apollo-carpet-upholstery-cleaning",
+  "version": "1.0.0",
+  "description": "Apollo Carpet & Upholstery Cleaning Website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "serve": "node server.js"
+  },
+  "keywords": [
+    "apollo",
+    "carpet-cleaning",
+    "upholstery-cleaning",
+    "orlando"
+  ],
+  "author": "Apollo",
+  "license": "ISC"
+}

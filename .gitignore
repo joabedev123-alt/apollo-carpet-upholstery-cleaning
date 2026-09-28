@@ -1,0 +1,12 @@
+# Dependencies & OS files
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Large archives (GitHub 100MB limit)
+*.zip
+
+# Logs & temp
+*.log
+.vscode/
+.idea/
