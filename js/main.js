@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const menuToggle = document.getElementById('menuToggle');
   const mobileNav = document.getElementById('mobileNav');
   const drawerOverlay = document.getElementById('drawerOverlay');
+  const drawerCloseBtn = document.getElementById('drawerCloseBtn');
   const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
   // Sticky header shadow
@@ -23,25 +24,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Mobile Menu Toggle
   function toggleMobileMenu() {
-    menuToggle.classList.toggle('active');
-    mobileNav.classList.toggle('open');
-    drawerOverlay.classList.toggle('active');
-    document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    if (menuToggle) menuToggle.classList.toggle('active');
+    if (mobileNav) mobileNav.classList.toggle('open');
+    if (drawerOverlay) drawerOverlay.classList.toggle('active');
+    document.body.style.overflow = (mobileNav && mobileNav.classList.contains('open')) ? 'hidden' : '';
+  }
+
+  function closeMobileMenu() {
+    if (menuToggle) menuToggle.classList.remove('active');
+    if (mobileNav) mobileNav.classList.remove('open');
+    if (drawerOverlay) drawerOverlay.classList.remove('active');
+    document.body.style.overflow = '';
   }
 
   if (menuToggle) {
     menuToggle.addEventListener('click', toggleMobileMenu);
   }
 
+  if (drawerCloseBtn) {
+    drawerCloseBtn.addEventListener('click', closeMobileMenu);
+  }
+
   if (drawerOverlay) {
-    drawerOverlay.addEventListener('click', toggleMobileMenu);
+    drawerOverlay.addEventListener('click', closeMobileMenu);
   }
 
   mobileNavLinks.forEach(link => {
     link.addEventListener('click', function () {
-      if (mobileNav.classList.contains('open')) {
-        toggleMobileMenu();
-      }
+      closeMobileMenu();
     });
   });
 

@@ -8,6 +8,12 @@
   <meta name="keywords" content="carpet cleaning orlando, upholstery cleaning kissimmee, sofa cleaning davenport, deep steam extraction windermere, rug cleaning ocoee">
   <meta name="author" content="Apollo Carpet & Upholstery Cleaning">
   
+  <!-- Mobile Browser Theme Color & Web App Tags -->
+  <meta name="theme-color" content="#0b2545">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=yes">
+  
   <!-- Favicon -->
   <link rel="icon" href="/assets/images/logo.png" type="image/png">
 
@@ -117,8 +123,11 @@
   <!-- Mobile Navigation Drawer -->
   <div class="drawer-overlay" id="drawerOverlay"></div>
   <aside class="mobile-nav-drawer" id="mobileNav" aria-label="Mobile Navigation">
-    <div style="margin-bottom: 24px;">
-      <img src="/assets/images/logo.png" alt="Apollo Logo" style="max-height: 48px; width: auto;">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border-light);">
+      <img src="/assets/images/logo.png" alt="Apollo Logo" style="max-height: 44px; width: auto;">
+      <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close menu" style="background: none; border: none; font-size: 1.5rem; color: var(--primary-navy); cursor: pointer; padding: 6px 10px;">
+        <i class="bi bi-x-lg"></i>
+      </button>
     </div>
 
     <div class="mobile-nav-links">
