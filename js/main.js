@@ -52,19 +52,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function setVideoSource(videoSrc) {
     if (!mainVideo || !videoSrc) return;
+    
     try {
       mainVideo.pause();
     } catch (e) {}
 
+    // Update source child element if exists
+    const sourceEl = mainVideo.querySelector('source');
+    if (sourceEl) {
+      sourceEl.src = videoSrc;
+    }
     mainVideo.src = videoSrc;
     mainVideo.load();
 
     const playPromise = mainVideo.play();
     if (playPromise !== undefined) {
       playPromise.catch(function () {
+        // Fallback for browsers that restrict unmuted autoplay without user direct gesture
         mainVideo.muted = true;
         mainVideo.play().catch(function (err) {
-          console.warn('Video auto-playback requires user click:', err);
+          console.warn('Video playback ready on user click:', err);
         });
       });
     }
