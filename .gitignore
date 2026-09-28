@@ -14,6 +14,21 @@ assets/*.jpg
 assets/*.png
 assets/*.mp4
 
+# Unused videos in production
+assets/videos/apollo_work_video_1.mp4
+assets/videos/apollo_work_video_7.mp4
+assets/videos/apollo_work_video_9.mp4
+assets/videos/apollo_work_video_10.mp4
+assets/videos/apollo_work_video_11.mp4
+assets/videos/apollo_work_video_12.mp4
+assets/videos/apollo_work_video_13.mp4
+assets/videos/apollo_work_video_14.mp4
+assets/videos/apollo_work_video_15.mp4
+assets/videos/apollo_work_video_16.mp4
+assets/videos/apollo_work_video_17.mp4
+assets/videos/apollo_work_video_18.mp4
+assets/videos/apollo_work_video_19.mp4
+
 # Large archives (GitHub 100MB limit)
 *.zip
 
