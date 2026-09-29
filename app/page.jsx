@@ -1040,7 +1040,10 @@ export default function HomePage() {
               <form onSubmit={handleQuoteSubmit} id="quoteEstimatorForm">
                 {/* Step 1: Services Selection */}
                 <div className="form-step-box">
-                  <h3 className="form-step-title">{t.quoteSection.step1}</h3>
+                  <h3 className="form-step-title">
+                    <span className="step-num">1</span>
+                    <span>{t.quoteSection.step1}</span>
+                  </h3>
                   <div className="service-options-grid">
                     {[
                       { key: 'carpet', icon: 'bi-layers-fill', name: t.quoteSection.serviceNames.carpet },
@@ -1069,7 +1072,10 @@ export default function HomePage() {
 
                 {/* Step 2: Service Details */}
                 <div className="form-step-box">
-                  <h3 className="form-step-title">{t.quoteSection.step2}</h3>
+                  <h3 className="form-step-title">
+                    <span className="step-num">2</span>
+                    <span>{t.quoteSection.step2}</span>
+                  </h3>
                   
                   {/* Carpet Details */}
                   {selectedServices.carpet && (
@@ -1078,7 +1084,7 @@ export default function HomePage() {
                       <div className="fields-inline-grid">
                         <div className="form-field">
                           <label>{t.quoteSection.fields.rooms}</label>
-                          <select value={formData.carpetRooms} onChange={(e) => setFormData({ ...formData, carpetRooms: e.target.value })}>
+                          <select className="form-control" value={formData.carpetRooms} onChange={(e) => setFormData({ ...formData, carpetRooms: e.target.value })}>
                             <option value="1">1 Room</option>
                             <option value="2">2 Rooms</option>
                             <option value="3">3 Rooms</option>
@@ -1088,7 +1094,7 @@ export default function HomePage() {
                         </div>
                         <div className="form-field">
                           <label>{t.quoteSection.fields.stairs}</label>
-                          <select value={formData.carpetStairs} onChange={(e) => setFormData({ ...formData, carpetStairs: e.target.value })}>
+                          <select className="form-control" value={formData.carpetStairs} onChange={(e) => setFormData({ ...formData, carpetStairs: e.target.value })}>
                             <option value="0">0 (No Stairs)</option>
                             <option value="1">1 Flight (10-15 steps)</option>
                             <option value="2">2 Flights</option>
@@ -1105,7 +1111,7 @@ export default function HomePage() {
                       <div className="fields-inline-grid">
                         <div className="form-field">
                           <label>{t.quoteSection.fields.standardSofas}</label>
-                          <select value={formData.sofaCount} onChange={(e) => setFormData({ ...formData, sofaCount: e.target.value })}>
+                          <select className="form-control" value={formData.sofaCount} onChange={(e) => setFormData({ ...formData, sofaCount: e.target.value })}>
                             <option value="0">0</option>
                             <option value="1">1 Sofa</option>
                             <option value="2">2 Sofas</option>
@@ -1114,7 +1120,7 @@ export default function HomePage() {
                         </div>
                         <div className="form-field">
                           <label>{t.quoteSection.fields.sectionals}</label>
-                          <select value={formData.sectionalCount} onChange={(e) => setFormData({ ...formData, sectionalCount: e.target.value })}>
+                          <select className="form-control" value={formData.sectionalCount} onChange={(e) => setFormData({ ...formData, sectionalCount: e.target.value })}>
                             <option value="0">0</option>
                             <option value="1">1 Sectional</option>
                             <option value="2+">2+ Sectionals</option>
@@ -1131,7 +1137,7 @@ export default function HomePage() {
                       <div className="fields-inline-grid">
                         <div className="form-field">
                           <label>{t.quoteSection.fields.rugCount}</label>
-                          <select value={formData.rugCount} onChange={(e) => setFormData({ ...formData, rugCount: e.target.value })}>
+                          <select className="form-control" value={formData.rugCount} onChange={(e) => setFormData({ ...formData, rugCount: e.target.value })}>
                             <option value="1">1 Rug</option>
                             <option value="2">2 Rugs</option>
                             <option value="3+">3+ Rugs</option>
@@ -1139,7 +1145,7 @@ export default function HomePage() {
                         </div>
                         <div className="form-field">
                           <label>{t.quoteSection.fields.rugType}</label>
-                          <select value={formData.rugType} onChange={(e) => setFormData({ ...formData, rugType: e.target.value })}>
+                          <select className="form-control" value={formData.rugType} onChange={(e) => setFormData({ ...formData, rugType: e.target.value })}>
                             <option value="Synthetic Standard">Synthetic Standard</option>
                             <option value="Wool / Delicate Blend">Wool / Delicate Blend</option>
                           </select>
@@ -1155,7 +1161,7 @@ export default function HomePage() {
                       <div className="fields-inline-grid">
                         <div className="form-field">
                           <label>{t.quoteSection.fields.mattressKing}</label>
-                          <select value={formData.mattressKing} onChange={(e) => setFormData({ ...formData, mattressKing: e.target.value })}>
+                          <select className="form-control" value={formData.mattressKing} onChange={(e) => setFormData({ ...formData, mattressKing: e.target.value })}>
                             <option value="0">0</option>
                             <option value="1">1 Mattress</option>
                             <option value="2">2 Mattresses</option>
@@ -1163,7 +1169,7 @@ export default function HomePage() {
                         </div>
                         <div className="form-field">
                           <label>{t.quoteSection.fields.mattressTwin}</label>
-                          <select value={formData.mattressTwin} onChange={(e) => setFormData({ ...formData, mattressTwin: e.target.value })}>
+                          <select className="form-control" value={formData.mattressTwin} onChange={(e) => setFormData({ ...formData, mattressTwin: e.target.value })}>
                             <option value="0">0</option>
                             <option value="1">1 Mattress</option>
                             <option value="2+">2+ Mattresses</option>
@@ -1180,7 +1186,7 @@ export default function HomePage() {
                       <div className="fields-inline-grid">
                         <div className="form-field">
                           <label>{t.quoteSection.fields.diningChairs}</label>
-                          <select value={formData.diningChairCount} onChange={(e) => setFormData({ ...formData, diningChairCount: e.target.value })}>
+                          <select className="form-control" value={formData.diningChairCount} onChange={(e) => setFormData({ ...formData, diningChairCount: e.target.value })}>
                             <option value="2">2 Chairs</option>
                             <option value="4">4 Chairs</option>
                             <option value="6">6 Chairs</option>
@@ -1189,7 +1195,7 @@ export default function HomePage() {
                         </div>
                         <div className="form-field">
                           <label>{t.quoteSection.fields.accentChairs}</label>
-                          <select value={formData.accentChairCount} onChange={(e) => setFormData({ ...formData, accentChairCount: e.target.value })}>
+                          <select className="form-control" value={formData.accentChairCount} onChange={(e) => setFormData({ ...formData, accentChairCount: e.target.value })}>
                             <option value="0">0</option>
                             <option value="1">1 Chair</option>
                             <option value="2+">2+ Chairs</option>
@@ -1206,7 +1212,7 @@ export default function HomePage() {
                       <div className="fields-inline-grid">
                         <div className="form-field">
                           <label>{t.quoteSection.fields.bedrooms}</label>
-                          <select value={formData.houseBeds} onChange={(e) => setFormData({ ...formData, houseBeds: e.target.value })}>
+                          <select className="form-control" value={formData.houseBeds} onChange={(e) => setFormData({ ...formData, houseBeds: e.target.value })}>
                             <option value="1-2">1 - 2 Beds</option>
                             <option value="3-4">3 - 4 Beds</option>
                             <option value="5+">5+ Beds</option>
@@ -1214,7 +1220,7 @@ export default function HomePage() {
                         </div>
                         <div className="form-field">
                           <label>{t.quoteSection.fields.bathrooms}</label>
-                          <select value={formData.houseBaths} onChange={(e) => setFormData({ ...formData, houseBaths: e.target.value })}>
+                          <select className="form-control" value={formData.houseBaths} onChange={(e) => setFormData({ ...formData, houseBaths: e.target.value })}>
                             <option value="1">1 Bath</option>
                             <option value="2">2 Baths</option>
                             <option value="3+">3+ Baths</option>
@@ -1225,20 +1231,25 @@ export default function HomePage() {
                   )}
 
                   {!Object.values(selectedServices).some(Boolean) && (
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontStyle: 'italic' }}>
-                      {t.quoteSection.summary.noServices}
-                    </p>
+                    <div className="quote-empty-hint">
+                      <i className="bi bi-info-circle-fill"></i>
+                      <span>{t.quoteSection.summary.noServices}</span>
+                    </div>
                   )}
                 </div>
 
                 {/* Step 3: Contact Info */}
                 <div className="form-step-box">
-                  <h3 className="form-step-title">{t.quoteSection.step3}</h3>
+                  <h3 className="form-step-title">
+                    <span className="step-num">3</span>
+                    <span>{t.quoteSection.step3}</span>
+                  </h3>
                   <div className="fields-inline-grid">
                     <div className="form-field">
                       <label>{t.quoteSection.fields.fullName}</label>
                       <input
                         type="text"
+                        className="form-control"
                         required
                         placeholder="John Doe"
                         value={formData.clientName}
@@ -1249,6 +1260,7 @@ export default function HomePage() {
                       <label>{t.quoteSection.fields.phone}</label>
                       <input
                         type="tel"
+                        className="form-control"
                         required
                         placeholder="(321) 000-0000"
                         value={formData.clientPhone}
@@ -1262,6 +1274,7 @@ export default function HomePage() {
                       <label>{t.quoteSection.fields.email}</label>
                       <input
                         type="email"
+                        className="form-control"
                         required
                         placeholder="your@email.com"
                         value={formData.clientEmail}
@@ -1272,6 +1285,7 @@ export default function HomePage() {
                       <label>{t.quoteSection.fields.city}</label>
                       <input
                         type="text"
+                        className="form-control"
                         required
                         placeholder="Orlando, 32801"
                         value={formData.clientCity}
@@ -1284,6 +1298,7 @@ export default function HomePage() {
                     <label>{t.quoteSection.fields.notes}</label>
                     <textarea
                       rows="3"
+                      className="form-control"
                       placeholder={t.quoteSection.fields.notesPlaceholder}
                       value={formData.clientNotes}
                       onChange={(e) => setFormData({ ...formData, clientNotes: e.target.value })}
@@ -1291,7 +1306,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <button type="submit" className="btn btn-accent btn-lg" style={{ width: '100%', marginTop: '10px' }}>
+                <button type="submit" className="btn btn-primary btn-lg btn-submit-quote" style={{ width: '100%', marginTop: '10px' }}>
                   <i className="bi bi-whatsapp"></i> {t.quoteSection.summary.btnSubmit}
                 </button>
               </form>
