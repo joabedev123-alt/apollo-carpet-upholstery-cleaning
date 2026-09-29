@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 504" width="100%" height="100%">
+  <!-- Green field -->
+  <rect width="720" height="504" fill="#009b3a"/>
+  <!-- Yellow rhombus -->
+  <polygon points="360,37.8 669.6,252 360,466.2 50.4,252" fill="#fedf00"/>
+  <!-- Blue circle -->
+  <circle cx="360" cy="252" r="126" fill="#002776"/>
+  <!-- White curved band (Ordem e Progresso) -->
+  <path d="M 234 252 A 136 136 0 0 1 486 252 A 126 126 0 0 0 234 252" fill="#ffffff"/>
+  <!-- Southern Cross and constellation stars -->
+  <g fill="#ffffff">
+    <!-- Cruzeiro do Sul -->
+    <polygon points="360,205 362,210 367,210 363,213 365,218 360,215 355,218 357,213 353,210 358,210" transform="scale(0.8) translate(85,45)"/>
+    <polygon points="360,270 362,275 367,275 363,278 365,283 360,280 355,283 357,278 353,275 358,275" transform="scale(0.8) translate(92,55)"/>
+    <polygon points="335,235 337,240 342,240 338,243 340,248 335,245 330,248 332,243 328,240 333,240" transform="scale(0.7) translate(140,70)"/>
+    <polygon points="385,242 387,247 392,247 388,250 390,255 385,252 380,255 382,250 378,247 383,247" transform="scale(0.7) translate(165,75)"/>
+    <polygon points="370,255 371.5,259 375.5,259 372.5,261 374,265 370,262.5 366,265 367.5,261 364.5,259 368.5,259" transform="scale(0.6) translate(245,110)"/>
+    <!-- Additional Stars -->
+    <circle cx="320" cy="275" r="3"/>
+    <circle cx="410" cy="285" r="3.5"/>
+    <circle cx="350" cy="305" r="3"/>
+    <circle cx="370" cy="315" r="2.5"/>
+    <circle cx="395" cy="215" r="3"/>
+  </g>
+</svg>

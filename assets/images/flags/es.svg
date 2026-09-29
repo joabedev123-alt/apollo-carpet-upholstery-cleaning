@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 500" width="100%" height="100%">
+  <rect width="750" height="500" fill="#c60b1e"/>
+  <rect width="750" height="250" y="125" fill="#ffc400"/>
+  <!-- Spanish Coat of Arms Simplified Crisp Representation -->
+  <g transform="translate(180, 175) scale(0.65)">
+    <!-- Crown -->
+    <path d="M40,20 Q60,5 80,20 Q100,5 120,20 L115,35 L45,35 Z" fill="#ffc400" stroke="#c60b1e" stroke-width="2"/>
+    <circle cx="80" cy="8" r="5" fill="#c60b1e"/>
+    <!-- Shield -->
+    <path d="M45,40 L115,40 L115,110 Q115,150 80,165 Q45,150 45,110 Z" fill="#c60b1e" stroke="#fff" stroke-width="2"/>
+    <rect x="52" y="47" width="25" height="45" fill="#c60b1e"/>
+    <!-- Castile Castle -->
+    <path d="M57,80 L57,60 L62,60 L62,55 L67,55 L67,60 L72,60 L72,80 Z" fill="#ffc400"/>
+    <!-- Leon Lion -->
+    <path d="M88,52 Q98,52 98,62 Q98,72 88,80 L88,52 Z" fill="#fff"/>
+    <!-- Aragon Stripes -->
+    <path d="M52,95 L78,95 M52,105 L78,105 M52,115 L78,115" stroke="#ffc400" stroke-width="4"/>
+    <!-- Navarra Chains -->
+    <circle cx="98" cy="115" r="10" fill="none" stroke="#ffc400" stroke-width="3"/>
+    <!-- Pillars of Hercules -->
+    <rect x="15" y="50" width="12" height="90" fill="#fff" rx="2" stroke="#aaa" stroke-width="1"/>
+    <path d="M10,45 L32,45 L25,52 L17,52 Z" fill="#ffc400"/>
+    <rect x="133" y="50" width="12" height="90" fill="#fff" rx="2" stroke="#aaa" stroke-width="1"/>
+    <path d="M128,45 L150,45 L143,52 L135,52 Z" fill="#ffc400"/>
+    <!-- Ribbon -->
+    <path d="M8,85 Q21,95 34,85" stroke="#c60b1e" stroke-width="5" fill="none"/>
+    <path d="M126,85 Q139,95 152,85" stroke="#c60b1e" stroke-width="5" fill="none"/>
+  </g>
+</svg>

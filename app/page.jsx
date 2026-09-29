@@ -367,28 +367,25 @@ export default function HomePage() {
                 type="button"
                 className={`lang-flag-btn ${currentLang === 'en' ? 'active' : ''}`}
                 onClick={() => handleSetLanguage('en')}
-                title="English (US)"
+                title="English (United States)"
               >
-                <span className="lang-flag-emoji">🇺🇸</span>
-                <span className="lang-code">EN</span>
+                <img src="/flags/us.svg" alt="USA Flag" className="lang-flag-img" />
               </button>
               <button
                 type="button"
                 className={`lang-flag-btn ${currentLang === 'es' ? 'active' : ''}`}
                 onClick={() => handleSetLanguage('es')}
-                title="Español (ES)"
+                title="Español (España)"
               >
-                <span className="lang-flag-emoji">🇪🇸</span>
-                <span className="lang-code">ES</span>
+                <img src="/flags/es.svg" alt="Spain Flag" className="lang-flag-img" />
               </button>
               <button
                 type="button"
                 className={`lang-flag-btn ${currentLang === 'pt' ? 'active' : ''}`}
                 onClick={() => handleSetLanguage('pt')}
-                title="Português (BR)"
+                title="Português (Brasil)"
               >
-                <span className="lang-flag-emoji">🇧🇷</span>
-                <span className="lang-code">PT</span>
+                <img src="/flags/br.svg" alt="Brazil Flag" className="lang-flag-img" />
               </button>
             </div>
 
@@ -443,24 +440,27 @@ export default function HomePage() {
             type="button"
             className={`lang-flag-btn ${currentLang === 'en' ? 'active' : ''}`}
             onClick={() => handleSetLanguage('en')}
+            title="English"
           >
-            <span className="lang-flag-emoji">🇺🇸</span>
+            <img src="/flags/us.svg" alt="USA Flag" className="lang-flag-img" />
             <span className="lang-code">English</span>
           </button>
           <button
             type="button"
             className={`lang-flag-btn ${currentLang === 'es' ? 'active' : ''}`}
             onClick={() => handleSetLanguage('es')}
+            title="Español"
           >
-            <span className="lang-flag-emoji">🇪🇸</span>
+            <img src="/flags/es.svg" alt="Spain Flag" className="lang-flag-img" />
             <span className="lang-code">Español</span>
           </button>
           <button
             type="button"
             className={`lang-flag-btn ${currentLang === 'pt' ? 'active' : ''}`}
             onClick={() => handleSetLanguage('pt')}
+            title="Português"
           >
-            <span className="lang-flag-emoji">🇧🇷</span>
+            <img src="/flags/br.svg" alt="Brazil Flag" className="lang-flag-img" />
             <span className="lang-code">Português</span>
           </button>
         </div>

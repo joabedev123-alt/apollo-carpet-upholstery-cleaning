@@ -88,17 +88,14 @@
       <div class="header-actions">
         <!-- Language Switcher Flags -->
         <div class="lang-switcher-nav" aria-label="Language Selector">
-          <button type="button" class="lang-flag-btn active" data-lang="en" title="English (US)">
-            <span class="lang-flag-emoji">🇺🇸</span>
-            <span class="lang-code">EN</span>
+          <button type="button" class="lang-flag-btn active" data-lang="en" title="English (United States)">
+            <img src="/assets/images/flags/us.svg" alt="USA Flag" class="lang-flag-img">
           </button>
-          <button type="button" class="lang-flag-btn" data-lang="es" title="Español (ES)">
-            <span class="lang-flag-emoji">🇪🇸</span>
-            <span class="lang-code">ES</span>
+          <button type="button" class="lang-flag-btn" data-lang="es" title="Español (España)">
+            <img src="/assets/images/flags/es.svg" alt="Spain Flag" class="lang-flag-img">
           </button>
-          <button type="button" class="lang-flag-btn" data-lang="pt" title="Português (BR)">
-            <span class="lang-flag-emoji">🇧🇷</span>
-            <span class="lang-code">PT</span>
+          <button type="button" class="lang-flag-btn" data-lang="pt" title="Português (Brasil)">
+            <img src="/assets/images/flags/br.svg" alt="Brazil Flag" class="lang-flag-img">
           </button>
         </div>
 
@@ -146,16 +143,16 @@
 
     <!-- Mobile Language Switcher -->
     <div class="mobile-lang-switcher" aria-label="Language Selector">
-      <button type="button" class="lang-flag-btn active" data-lang="en">
-        <span class="lang-flag-emoji">🇺🇸</span>
+      <button type="button" class="lang-flag-btn active" data-lang="en" title="English">
+        <img src="/assets/images/flags/us.svg" alt="USA Flag" class="lang-flag-img">
         <span class="lang-code">English</span>
       </button>
-      <button type="button" class="lang-flag-btn" data-lang="es">
-        <span class="lang-flag-emoji">🇪🇸</span>
+      <button type="button" class="lang-flag-btn" data-lang="es" title="Español">
+        <img src="/assets/images/flags/es.svg" alt="Spain Flag" class="lang-flag-img">
         <span class="lang-code">Español</span>
       </button>
-      <button type="button" class="lang-flag-btn" data-lang="pt">
-        <span class="lang-flag-emoji">🇧🇷</span>
+      <button type="button" class="lang-flag-btn" data-lang="pt" title="Português">
+        <img src="/assets/images/flags/br.svg" alt="Brazil Flag" class="lang-flag-img">
         <span class="lang-code">Português</span>
       </button>
     </div>
@@ -1412,7 +1409,8 @@
     </a>
   </div>
 
-  <!-- Main JavaScript File -->
+  <!-- Multilingual Translations & Main Logic -->
+  <script src="/js/translations.js"></script>
   <script src="/js/main.js"></script>
 </body>
 </html>
