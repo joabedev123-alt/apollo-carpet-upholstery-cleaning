@@ -86,20 +86,36 @@
 
       <!-- Header Actions Right -->
       <div class="header-actions">
+        <!-- Language Switcher Flags -->
+        <div class="lang-switcher-nav" aria-label="Language Selector">
+          <button type="button" class="lang-flag-btn active" data-lang="en" title="English (US)">
+            <span class="lang-flag-emoji">🇺🇸</span>
+            <span class="lang-code">EN</span>
+          </button>
+          <button type="button" class="lang-flag-btn" data-lang="es" title="Español (ES)">
+            <span class="lang-flag-emoji">🇪🇸</span>
+            <span class="lang-code">ES</span>
+          </button>
+          <button type="button" class="lang-flag-btn" data-lang="pt" title="Português (BR)">
+            <span class="lang-flag-emoji">🇧🇷</span>
+            <span class="lang-code">PT</span>
+          </button>
+        </div>
+
         <!-- Direct Phone Badge -->
         <a href="tel:+13212725560" class="header-phone-box" title="Direct Phone">
           <div class="phone-icon-circle">
             <i class="bi bi-telephone-fill"></i>
           </div>
           <div class="phone-meta">
-            <span class="phone-label">Call Direct</span>
+            <span class="phone-label" data-i18n="nav.callDirect">Call Direct</span>
             <span class="phone-number">(321) 272-5560</span>
           </div>
         </a>
 
         <!-- Primary Quote CTA -->
         <a href="#quote" class="btn btn-primary header-quote-btn">
-          <i class="bi bi-calculator"></i> Get Free Quote
+          <i class="bi bi-calculator"></i> <span data-i18n="nav.getFreeQuote">Get Free Quote</span>
         </a>
 
         <!-- Mobile Phone Icon Only -->
@@ -121,10 +137,26 @@
   <!-- Mobile Navigation Drawer -->
   <div class="drawer-overlay" id="drawerOverlay"></div>
   <aside class="mobile-nav-drawer" id="mobileNav" aria-label="Mobile Navigation">
-    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border-light);">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-light);">
       <img src="/assets/images/logo.png" alt="Apollo Logo" style="max-height: 44px; width: auto;">
       <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close menu" style="background: none; border: none; font-size: 1.5rem; color: var(--primary-navy); cursor: pointer; padding: 6px 10px;">
         <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Language Switcher -->
+    <div class="mobile-lang-switcher" aria-label="Language Selector">
+      <button type="button" class="lang-flag-btn active" data-lang="en">
+        <span class="lang-flag-emoji">🇺🇸</span>
+        <span class="lang-code">English</span>
+      </button>
+      <button type="button" class="lang-flag-btn" data-lang="es">
+        <span class="lang-flag-emoji">🇪🇸</span>
+        <span class="lang-code">Español</span>
+      </button>
+      <button type="button" class="lang-flag-btn" data-lang="pt">
+        <span class="lang-flag-emoji">🇧🇷</span>
+        <span class="lang-code">Português</span>
       </button>
     </div>
 

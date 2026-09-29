@@ -55,6 +55,36 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // --- Language Switcher Controller ---
+  const langButtons = document.querySelectorAll('.lang-flag-btn');
+  let currentLanguage = localStorage.getItem('apollo_lang') || 'en';
+
+  function applyLanguage(lang) {
+    currentLanguage = lang;
+    try {
+      localStorage.setItem('apollo_lang', lang);
+    } catch (e) {}
+
+    langButtons.forEach(btn => {
+      if (btn.getAttribute('data-lang') === lang) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  langButtons.forEach(btn => {
+    btn.addEventListener('click', function () {
+      const selected = this.getAttribute('data-lang');
+      if (selected) {
+        applyLanguage(selected);
+      }
+    });
+  });
+
+  applyLanguage(currentLanguage);
+
   // --- 2. Verified Work Results Automatic Slider (2-second interval & manual controls) ---
   const resultsCarousel = document.getElementById('resultsCarousel');
   const resultsSlides = document.querySelectorAll('.results-slide-card');
