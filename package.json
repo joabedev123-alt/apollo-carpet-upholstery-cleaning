@@ -4,8 +4,10 @@
   "description": "Apollo Carpet & Upholstery Cleaning Website",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "node scripts/build-dist.js",
+    "build:next": "next build",
+    "build:dist": "node scripts/build-dist.js",
+    "start": "node scripts/local-server.js",
     "serve": "node scripts/local-server.js"
   },
   "dependencies": {
