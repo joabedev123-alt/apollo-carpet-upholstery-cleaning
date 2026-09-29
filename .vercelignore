@@ -1,5 +1,5 @@
-# Ignore local node server from Vercel serverless bundling
-server.js
+# Ignore scripts from Vercel static deployment
+scripts/
 
 # Ignore source & raw media folders
 assets_images/

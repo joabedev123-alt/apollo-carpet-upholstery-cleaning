@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
-const PUBLIC_DIR = path.resolve(__dirname);
+const PUBLIC_DIR = path.resolve(__dirname, '..');
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=UTF-8',
