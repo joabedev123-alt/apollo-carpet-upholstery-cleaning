@@ -289,13 +289,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 9. Service Areas
     const areasTag = document.querySelector('#areas .section-tag span');
-    if (areasTag) areasTag.textContent = dict.areasSection.tag;
+    if (areasTag && dict.areasSection) areasTag.textContent = dict.areasSection.tag;
 
-    const areasTitle = document.querySelector('#areas .section-title');
-    if (areasTitle) areasTitle.textContent = dict.areasSection.title;
+    const areasTitle = document.querySelector('#areas .areas-header h2, #areas .section-title');
+    if (areasTitle && dict.areasSection) areasTitle.textContent = dict.areasSection.title;
 
-    const areasSubtitle = document.querySelector('#areas .section-subtitle');
-    if (areasSubtitle) areasSubtitle.textContent = dict.areasSection.subtitle;
+    const areasSubtitle = document.querySelector('#areas .areas-header p, #areas .section-subtitle');
+    if (areasSubtitle && dict.areasSection) areasSubtitle.textContent = dict.areasSection.subtitle;
+
+    const areasFooterNote = document.querySelector('#areas .areas-footer-note span');
+    if (areasFooterNote) {
+      if (lang === 'pt') {
+        areasFooterNote.innerHTML = 'Mora por perto? Fale conosco em <strong>(321) 272-5560</strong> para confirmar atendimento no seu CEP.';
+      } else if (lang === 'es') {
+        areasFooterNote.innerHTML = '¿Vive cerca? Contáctenos al <strong>(321) 272-5560</strong> para confirmar cobertura en su código postal.';
+      } else {
+        areasFooterNote.innerHTML = 'Located nearby? Contact us at <strong>(321) 272-5560</strong> to confirm fast coverage in your ZIP code.';
+      }
+    }
 
     // 10. FAQ Section
     const faqTag = document.querySelector('#faq .section-tag span');

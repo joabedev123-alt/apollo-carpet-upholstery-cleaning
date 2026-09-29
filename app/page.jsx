@@ -940,22 +940,52 @@ export default function HomePage() {
       {/* 9. Service Areas */}
       <section className="areas-section" id="areas">
         <div className="container">
-          <div className="text-center">
-            <div className="section-tag">
-              <i className="bi bi-geo-alt-fill"></i>
-              <span>{t.areasSection.tag}</span>
-            </div>
-            <h2 className="section-title">{t.areasSection.title}</h2>
-            <p className="section-subtitle">{t.areasSection.subtitle}</p>
-          </div>
-
-          <div className="cities-compact-grid">
-            {['Orlando', 'Kissimmee', 'Winter Park', 'Davenport', 'Windermere', 'Ocoee', 'Dr. Phillips', 'Lake Nona', 'Celebration', 'Clermont', 'Winter Garden', 'Poinciana', 'Altamonte Springs', 'Maitland', 'St. Cloud', 'Four Corners'].map((city, idx) => (
-              <div key={idx} className="city-pill-compact">
-                <i className="bi bi-check-circle-fill"></i>
-                <span>{city}</span>
+          <div className="areas-box areas-box-compact">
+            <div className="areas-header areas-header-compact">
+              <div className="section-tag">
+                <i className="bi bi-pin-map-fill"></i>
+                <span>{t.areasSection.tag}</span>
               </div>
-            ))}
+              <h2>{t.areasSection.title}</h2>
+              <p>{t.areasSection.subtitle}</p>
+            </div>
+
+            <div className="cities-grid cities-grid-compact">
+              {[
+                'Orlando',
+                'Kissimmee',
+                'Winter Park',
+                'Davenport',
+                'Windermere',
+                'Ocoee',
+                'Dr. Phillips',
+                'Lake Nona',
+                'Celebration',
+                'Clermont',
+                'Winter Garden',
+                'Poinciana',
+                'Altamonte Springs',
+                'Maitland',
+                'St. Cloud',
+                'Four Corners',
+              ].map((city, idx) => (
+                <div key={idx} className="city-pill-compact">
+                  <i className="bi bi-geo-alt-fill"></i>
+                  <span>{city}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="areas-footer-note areas-footer-note-compact">
+              <i className="bi bi-info-circle-fill"></i>
+              <span>
+                {currentLang === 'pt'
+                  ? <>Mora por perto? Fale conosco em <strong>(321) 272-5560</strong> para confirmar atendimento no seu CEP.</>
+                  : currentLang === 'es'
+                  ? <>¿Vive cerca? Contáctenos al <strong>(321) 272-5560</strong> para confirmar cobertura en su código postal.</>
+                  : <>Located nearby? Contact us at <strong>(321) 272-5560</strong> to confirm fast coverage in your ZIP code.</>}
+              </span>
+            </div>
           </div>
         </div>
       </section>
