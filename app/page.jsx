@@ -550,7 +550,8 @@ export default function HomePage() {
                   width="800"
                   height="500"
                 >
-                  <source src="/assets/images/hero_video.mp4" type="video/mp4" />
+                  <source src="/assets/video_01.mp4" type="video/mp4" />
+                  <source src="/video_01.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
 
