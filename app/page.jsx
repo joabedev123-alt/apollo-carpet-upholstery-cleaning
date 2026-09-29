@@ -108,7 +108,100 @@ export default function HomePage() {
     },
   ];
 
-  // Touch Swipe coordinates for carousel
+  // Services Carousel State (What We Do)
+  const servicesSlides = [
+    {
+      id: 'carpet',
+      img: '/assets/images/img_01.png',
+      badge: 'Hot Water Extraction',
+      icon: 'bi-layers-fill',
+      title: 'Carpet Cleaning',
+      desc: 'High-pressure hot water extraction reaches deep into carpet fibers to remove trapped soil, allergens, and high-traffic pathways.',
+      features: [
+        'Wall-to-wall rooms & carpeted stairs',
+        'Spot & stain pre-treatment',
+        'High-suction fast drying',
+      ],
+      quoteKey: 'carpet',
+    },
+    {
+      id: 'sofas',
+      img: '/assets/images/img_02.png',
+      badge: 'Fabric Rejuvenation',
+      icon: 'bi-archive-fill',
+      title: 'Sofas & Sectionals',
+      desc: 'Gentle yet powerful upholstery extraction for standard sofas, L-shaped sectionals, loveseats, and fabric recliners.',
+      features: [
+        'Odor and body oil extraction',
+        'Cushion & crevice detailed vacuuming',
+        'Fabric color & texture brightening',
+      ],
+      quoteKey: 'sofas',
+    },
+    {
+      id: 'upholstery',
+      img: '/assets/images/img_03.png',
+      badge: 'Detailed Care',
+      icon: 'bi-gem',
+      title: 'Upholstery Cleaning',
+      desc: 'Complete care for custom upholstered headboards, armchairs, ottomans, and delicate synthetic and woven furniture fabrics.',
+      features: [
+        'Upholstered headboards & benches',
+        'Delicate fiber pH-balanced rinsing',
+        'Prevents fabric water-marking',
+      ],
+      quoteKey: 'sofas',
+    },
+    {
+      id: 'rugs',
+      img: '/assets/images/img_04.png',
+      badge: 'Rugs & Runners',
+      icon: 'bi-bounding-box-circles',
+      title: 'Area Rugs',
+      desc: 'Dedicated cleaning for living room area rugs, runners, and decorative floor coverings to restore original patterns and softness.',
+      features: [
+        'Wool, synthetic & blended rugs',
+        'Edge and fringe careful detailing',
+        'Neutralizing pet dander & spills',
+      ],
+      quoteKey: 'rugs',
+    },
+    {
+      id: 'mattresses',
+      img: '/assets/images/img_05.png',
+      badge: 'Sanitization',
+      icon: 'bi-heart-pulse-fill',
+      title: 'Mattresses',
+      desc: 'Deep hygienic extraction of King, Queen, and Twin mattresses to extract sweat residues, dead skin flakes, and dust mites.',
+      features: [
+        'Allergen & micro-dust extraction',
+        'Spot stain relief & deodorizing',
+        'Healthier sleeping environment',
+      ],
+      quoteKey: 'mattresses',
+    },
+    {
+      id: 'chairs',
+      img: '/assets/images/img_06.png',
+      badge: 'Precision Clean',
+      icon: 'bi-cup-hot-fill',
+      title: 'Dining & Accent Chairs',
+      desc: 'Detailed fabric cleaning for dining room chair sets, office desk chairs, and living room accent armchairs.',
+      features: [
+        'Dining sets (4, 6, 8+ chairs)',
+        'Food & drink spill removal',
+        'Wood frame protection during work',
+      ],
+      quoteKey: 'chairs',
+    },
+  ];
+
+  const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
+  const [itemsPerView, setItemsPerView] = useState(3);
+  const isServicesHovered = useRef(false);
+  const servicesTouchStartX = useRef(0);
+
+  // Touch Swipe coordinates for verified results carousel
   const touchStartX = useRef(0);
   const isCarouselHovered = useRef(false);
 
@@ -161,7 +254,36 @@ export default function HomePage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Carousel auto-slide timer (every 2 seconds)
+  // Responsive items per view for Services Carousel
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setItemsPerView(1);
+      } else if (window.innerWidth < 1024) {
+        setItemsPerView(2);
+      } else {
+        setItemsPerView(3);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Services Carousel Auto-slide (every 3.5s)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!isServicesHovered.current) {
+        setCurrentServiceIndex((prev) => {
+          const maxIdx = Math.max(0, servicesSlides.length - itemsPerView);
+          return prev >= maxIdx ? 0 : prev + 1;
+        });
+      }
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [servicesSlides.length, itemsPerView]);
+
+  // Verified Results Carousel auto-slide timer (every 2 seconds)
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isCarouselHovered.current) {
@@ -507,7 +629,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 5. Our Cleaning Services */}
+      {/* 5. Our Cleaning Services (Interactive Carousel) */}
       <section className="services-section" id="services">
         <div className="container">
           <div className="text-center">
@@ -521,189 +643,104 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="services-grid">
-            {/* 1. Carpet Cleaning */}
-            <article className="service-card">
-              <div className="service-img-wrap">
-                <img src="/assets/images/img_01.png" alt="Limpeza de Carpetes Profissional" loading="lazy" />
-                <span className="service-badge">Hot Water Extraction</span>
-              </div>
-              <div className="service-body">
-                <div className="service-icon-title">
-                  <div className="service-icon-box"><i className="bi bi-layers-fill"></i></div>
-                  <h3 className="service-card-title">Carpet Cleaning</h3>
+          <div
+            className="services-carousel-wrap"
+            onMouseEnter={() => { isServicesHovered.current = true; }}
+            onMouseLeave={() => { isServicesHovered.current = false; }}
+            onTouchStart={(e) => {
+              isServicesHovered.current = true;
+              if (e.touches && e.touches[0]) {
+                servicesTouchStartX.current = e.touches[0].clientX;
+              }
+            }}
+            onTouchEnd={(e) => {
+              isServicesHovered.current = false;
+              if (e.changedTouches && e.changedTouches[0]) {
+                const diffX = servicesTouchStartX.current - e.changedTouches[0].clientX;
+                if (Math.abs(diffX) > 40) {
+                  if (diffX > 0) {
+                    // Next slide
+                    setCurrentServiceIndex((prev) => (prev >= servicesSlides.length - itemsPerView ? 0 : prev + 1));
+                  } else {
+                    // Prev slide
+                    setCurrentServiceIndex((prev) => (prev <= 0 ? Math.max(0, servicesSlides.length - itemsPerView) : prev - 1));
+                  }
+                }
+              }
+            }}
+          >
+            <div
+              className="services-carousel-track"
+              style={{
+                transform: `translateX(-${currentServiceIndex * (100 / itemsPerView)}%)`,
+              }}
+            >
+              {servicesSlides.map((service, idx) => (
+                <div key={service.id} className="service-slide-item">
+                  <article className="service-card">
+                    <div className="service-img-wrap">
+                      <img src={service.img} alt={service.title} loading="lazy" />
+                      <span className="service-badge">{service.badge}</span>
+                    </div>
+                    <div className="service-body">
+                      <div className="service-icon-title">
+                        <div className="service-icon-box">
+                          <i className={`bi ${service.icon}`}></i>
+                        </div>
+                        <h3 className="service-card-title">{service.title}</h3>
+                      </div>
+                      <p className="service-desc">{service.desc}</p>
+                      <ul className="service-features-list">
+                        {service.features.map((feat, fIdx) => (
+                          <li key={fIdx}>
+                            <i className="bi bi-check2-circle"></i> {feat}
+                          </li>
+                        ))}
+                      </ul>
+                      <button
+                        className="btn btn-outline service-card-btn"
+                        onClick={() => selectServiceInQuote(service.quoteKey)}
+                      >
+                        <i className="bi bi-plus-circle"></i> Select in Quote
+                      </button>
+                    </div>
+                  </article>
                 </div>
-                <p className="service-desc">
-                  High-pressure hot water extraction reaches deep into carpet fibers to remove trapped soil, allergens, and high-traffic pathways.
-                </p>
-                <ul className="service-features-list">
-                  <li><i className="bi bi-check2-circle"></i> Wall-to-wall rooms &amp; carpeted stairs</li>
-                  <li><i className="bi bi-check2-circle"></i> Spot &amp; stain pre-treatment</li>
-                  <li><i className="bi bi-check2-circle"></i> High-suction fast drying</li>
-                </ul>
-                <button className="btn btn-outline service-card-btn" onClick={() => selectServiceInQuote('carpet')}>
-                  <i className="bi bi-plus-circle"></i> Select in Quote
-                </button>
-              </div>
-            </article>
+              ))}
+            </div>
 
-            {/* 2. Sofas & Sectionals */}
-            <article className="service-card">
-              <div className="service-img-wrap">
-                <img src="/assets/images/img_02.png" alt="Sofás e Conjuntos Modulares" loading="lazy" />
-                <span className="service-badge">Fabric Rejuvenation</span>
+            {/* Carousel Navigation & Controls */}
+            <div className="services-carousel-controls">
+              <button
+                type="button"
+                className="services-nav-arrow"
+                onClick={() => setCurrentServiceIndex((prev) => (prev <= 0 ? Math.max(0, servicesSlides.length - itemsPerView) : prev - 1))}
+                aria-label="Previous Services Slide"
+              >
+                <i className="bi bi-chevron-left"></i>
+              </button>
+              
+              <div className="services-dots-row">
+                {Array.from({ length: Math.max(1, servicesSlides.length - itemsPerView + 1) }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className={`services-dot-btn ${idx === currentServiceIndex ? 'active' : ''}`}
+                    onClick={() => setCurrentServiceIndex(idx)}
+                    aria-label={`Go to service slide ${idx + 1}`}
+                  ></button>
+                ))}
               </div>
-              <div className="service-body">
-                <div className="service-icon-title">
-                  <div className="service-icon-box"><i className="bi bi-archive-fill"></i></div>
-                  <h3 className="service-card-title">Sofas &amp; Sectionals</h3>
-                </div>
-                <p className="service-desc">
-                  Gentle yet powerful upholstery extraction for standard sofas, L-shaped sectionals, loveseats, and fabric recliners.
-                </p>
-                <ul className="service-features-list">
-                  <li><i className="bi bi-check2-circle"></i> Odor and body oil extraction</li>
-                  <li><i className="bi bi-check2-circle"></i> Cushion &amp; crevice detailed vacuuming</li>
-                  <li><i className="bi bi-check2-circle"></i> Fabric color &amp; texture brightening</li>
-                </ul>
-                <button className="btn btn-outline service-card-btn" onClick={() => selectServiceInQuote('sofas')}>
-                  <i className="bi bi-plus-circle"></i> Select in Quote
-                </button>
-              </div>
-            </article>
 
-            {/* 3. Upholstery Cleaning */}
-            <article className="service-card">
-              <div className="service-img-wrap">
-                <img src="/assets/images/img_03.png" alt="Limpeza de Estofados e Tecidos Delicados" loading="lazy" />
-                <span className="service-badge">Detailed Care</span>
-              </div>
-              <div className="service-body">
-                <div className="service-icon-title">
-                  <div className="service-icon-box"><i className="bi bi-gem"></i></div>
-                  <h3 className="service-card-title">Upholstery Cleaning</h3>
-                </div>
-                <p className="service-desc">
-                  Complete care for custom upholstered headboards, armchairs, ottomans, and delicate synthetic and woven furniture fabrics.
-                </p>
-                <ul className="service-features-list">
-                  <li><i className="bi bi-check2-circle"></i> Upholstered headboards &amp; benches</li>
-                  <li><i className="bi bi-check2-circle"></i> Delicate fiber pH-balanced rinsing</li>
-                  <li><i className="bi bi-check2-circle"></i> Prevents fabric water-marking</li>
-                </ul>
-                <button className="btn btn-outline service-card-btn" onClick={() => selectServiceInQuote('sofas')}>
-                  <i className="bi bi-plus-circle"></i> Select in Quote
-                </button>
-              </div>
-            </article>
-
-            {/* 4. Area Rugs */}
-            <article className="service-card">
-              <div className="service-img-wrap">
-                <img src="/assets/images/img_04.png" alt="Tapetes de Área e Passadeiras" loading="lazy" />
-                <span className="service-badge">Rugs &amp; Runners</span>
-              </div>
-              <div className="service-body">
-                <div className="service-icon-title">
-                  <div className="service-icon-box"><i className="bi bi-bounding-box-circles"></i></div>
-                  <h3 className="service-card-title">Area Rugs</h3>
-                </div>
-                <p className="service-desc">
-                  Dedicated cleaning for living room area rugs, runners, and decorative floor coverings to restore original patterns and softness.
-                </p>
-                <ul className="service-features-list">
-                  <li><i className="bi bi-check2-circle"></i> Wool, synthetic &amp; blended rugs</li>
-                  <li><i className="bi bi-check2-circle"></i> Edge and fringe careful detailing</li>
-                  <li><i className="bi bi-check2-circle"></i> Neutralizing pet dander &amp; spills</li>
-                </ul>
-                <button className="btn btn-outline service-card-btn" onClick={() => selectServiceInQuote('rugs')}>
-                  <i className="bi bi-plus-circle"></i> Select in Quote
-                </button>
-              </div>
-            </article>
-
-            {/* 5. Mattresses */}
-            <article className="service-card">
-              <div className="service-img-wrap">
-                <img src="/assets/images/img_05.png" alt="Higienização Profunda de Colchões" loading="lazy" />
-                <span className="service-badge">Sanitization</span>
-              </div>
-              <div className="service-body">
-                <div className="service-icon-title">
-                  <div className="service-icon-box"><i className="bi bi-heart-pulse-fill"></i></div>
-                  <h3 className="service-card-title">Mattresses</h3>
-                </div>
-                <p className="service-desc">
-                  Deep hygienic extraction of King, Queen, and Twin mattresses to extract sweat residues, dead skin flakes, and dust mites.
-                </p>
-                <ul className="service-features-list">
-                  <li><i className="bi bi-check2-circle"></i> Allergen &amp; micro-dust extraction</li>
-                  <li><i className="bi bi-check2-circle"></i> Spot stain relief &amp; deodorizing</li>
-                  <li><i className="bi bi-check2-circle"></i> Healthier sleeping environment</li>
-                </ul>
-                <button className="btn btn-outline service-card-btn" onClick={() => selectServiceInQuote('mattresses')}>
-                  <i className="bi bi-plus-circle"></i> Select in Quote
-                </button>
-              </div>
-            </article>
-
-            {/* 6. Dining & Accent Chairs */}
-            <article className="service-card">
-              <div className="service-img-wrap">
-                <img src="/assets/images/img_06.png" alt="Cadeiras de Jantar e de Destaque" loading="lazy" />
-                <span className="service-badge">Precision Clean</span>
-              </div>
-              <div className="service-body">
-                <div className="service-icon-title">
-                  <div className="service-icon-box"><i className="bi bi-cup-hot-fill"></i></div>
-                  <h3 className="service-card-title">Dining &amp; Accent Chairs</h3>
-                </div>
-                <p className="service-desc">
-                  Detailed fabric cleaning for dining room chair sets, office desk chairs, and living room accent armchairs.
-                </p>
-                <ul className="service-features-list">
-                  <li><i className="bi bi-check2-circle"></i> Dining sets (4, 6, 8+ chairs)</li>
-                  <li><i className="bi bi-check2-circle"></i> Food &amp; drink spill removal</li>
-                  <li><i className="bi bi-check2-circle"></i> Wood frame protection during work</li>
-                </ul>
-                <button className="btn btn-outline service-card-btn" onClick={() => selectServiceInQuote('chairs')}>
-                  <i className="bi bi-plus-circle"></i> Select in Quote
-                </button>
-              </div>
-            </article>
-
-            {/* 7. House Cleaning */}
-            <article className="service-card" style={{ gridColumn: '1 / -1' }}>
-              <div className="service-body" style={{ padding: '30px' }}>
-                <div className="service-icon-title">
-                  <div className="service-icon-box"><i className="bi bi-house-door-fill"></i></div>
-                  <div>
-                    <h3 className="service-card-title">House Cleaning Services</h3>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--accent-cyan-dark)', fontWeight: 700 }}>Complete Residential Home Care</span>
-                  </div>
-                </div>
-                <p className="service-desc">
-                  In addition to carpet and upholstery extraction, Apollo provides meticulous house cleaning programs tailored to your lifestyle:
-                </p>
-                <div className="form-grid-3" style={{ marginBottom: '20px' }}>
-                  <div style={{ background: 'var(--bg-soft-gray)', padding: '16px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-light)' }}>
-                    <h4 style={{ fontSize: '1rem', marginBottom: '6px', color: 'var(--primary-navy)' }}><i className="bi bi-calendar-check" style={{ color: 'var(--accent-cyan)' }}></i> Weekly &amp; Bi-Weekly</h4>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Ongoing regular maintenance to keep kitchens, bathrooms, bedrooms, and common areas immaculate.</p>
-                  </div>
-                  <div style={{ background: 'var(--bg-soft-gray)', padding: '16px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-light)' }}>
-                    <h4 style={{ fontSize: '1rem', marginBottom: '6px', color: 'var(--primary-navy)' }}><i className="bi bi-sparkles" style={{ color: 'var(--accent-cyan)' }}></i> One-Time Deep Clean</h4>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Thorough top-to-bottom scrub including baseboards, interior surfaces, appliances, and fixtures.</p>
-                  </div>
-                  <div style={{ background: 'var(--bg-soft-gray)', padding: '16px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-light)' }}>
-                    <h4 style={{ fontSize: '1rem', marginBottom: '6px', color: 'var(--primary-navy)' }}><i className="bi bi-box-seam" style={{ color: 'var(--accent-cyan)' }}></i> Move-In / Move-Out</h4>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Turnkey cleaning preparing empty houses or apartments for new tenants, owners, or inspections.</p>
-                  </div>
-                </div>
-                <button className="btn btn-primary" onClick={() => selectServiceInQuote('house')} style={{ alignSelf: 'flex-start' }}>
-                  <i className="bi bi-plus-circle"></i> Include House Cleaning in Quote
-                </button>
-              </div>
-            </article>
+              <button
+                type="button"
+                className="services-nav-arrow"
+                onClick={() => setCurrentServiceIndex((prev) => (prev >= servicesSlides.length - itemsPerView ? 0 : prev + 1))}
+                aria-label="Next Services Slide"
+              >
+                <i className="bi bi-chevron-right"></i>
+              </button>
+            </div>
           </div>
         </div>
       </section>

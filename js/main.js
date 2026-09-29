@@ -507,5 +507,111 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // --- 6. Services Carousel Controller ---
+  const servicesWrap = document.getElementById('servicesCarouselWrap');
+  const servicesTrack = document.getElementById('servicesCarouselTrack');
+  const servicesPrevBtn = document.getElementById('servicesPrevBtn');
+  const servicesNextBtn = document.getElementById('servicesNextBtn');
+  const servicesDotsRow = document.getElementById('servicesDotsRow');
+
+  if (servicesWrap && servicesTrack) {
+    const slides = servicesTrack.querySelectorAll('.service-slide-item');
+    let currentServiceIndex = 0;
+    let isServicesHovered = false;
+
+    function getItemsPerView() {
+      if (window.innerWidth < 640) return 1;
+      if (window.innerWidth < 1024) return 2;
+      return 3;
+    }
+
+    function updateServicesCarousel() {
+      const itemsPerView = getItemsPerView();
+      const maxIndex = Math.max(0, slides.length - itemsPerView);
+      if (currentServiceIndex > maxIndex) {
+        currentServiceIndex = maxIndex;
+      }
+      const itemWidthPercent = 100 / itemsPerView;
+      servicesTrack.style.transform = `translateX(-${currentServiceIndex * itemWidthPercent}%)`;
+
+      // Update dots
+      if (servicesDotsRow) {
+        servicesDotsRow.innerHTML = '';
+        const dotCount = maxIndex + 1;
+        for (let i = 0; i < dotCount; i++) {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = `services-dot-btn ${i === currentServiceIndex ? 'active' : ''}`;
+          dot.setAttribute('aria-label', `Go to service slide ${i + 1}`);
+          dot.addEventListener('click', () => {
+            currentServiceIndex = i;
+            updateServicesCarousel();
+          });
+          servicesDotsRow.appendChild(dot);
+        }
+      }
+    }
+
+    if (servicesPrevBtn) {
+      servicesPrevBtn.addEventListener('click', () => {
+        const itemsPerView = getItemsPerView();
+        const maxIndex = Math.max(0, slides.length - itemsPerView);
+        currentServiceIndex = currentServiceIndex <= 0 ? maxIndex : currentServiceIndex - 1;
+        updateServicesCarousel();
+      });
+    }
+
+    if (servicesNextBtn) {
+      servicesNextBtn.addEventListener('click', () => {
+        const itemsPerView = getItemsPerView();
+        const maxIndex = Math.max(0, slides.length - itemsPerView);
+        currentServiceIndex = currentServiceIndex >= maxIndex ? 0 : currentServiceIndex + 1;
+        updateServicesCarousel();
+      });
+    }
+
+    // Touch swipe support
+    let touchStartX = 0;
+    servicesWrap.addEventListener('touchstart', (e) => {
+      isServicesHovered = true;
+      if (e.touches && e.touches[0]) {
+        touchStartX = e.touches[0].clientX;
+      }
+    }, { passive: true });
+
+    servicesWrap.addEventListener('touchend', (e) => {
+      isServicesHovered = false;
+      if (e.changedTouches && e.changedTouches[0]) {
+        const diffX = touchStartX - e.changedTouches[0].clientX;
+        const itemsPerView = getItemsPerView();
+        const maxIndex = Math.max(0, slides.length - itemsPerView);
+        if (Math.abs(diffX) > 40) {
+          if (diffX > 0) {
+            currentServiceIndex = currentServiceIndex >= maxIndex ? 0 : currentServiceIndex + 1;
+          } else {
+            currentServiceIndex = currentServiceIndex <= 0 ? maxIndex : currentServiceIndex - 1;
+          }
+          updateServicesCarousel();
+        }
+      }
+    }, { passive: true });
+
+    servicesWrap.addEventListener('mouseenter', () => { isServicesHovered = true; });
+    servicesWrap.addEventListener('mouseleave', () => { isServicesHovered = false; });
+
+    // Auto-slide interval
+    setInterval(() => {
+      if (!isServicesHovered) {
+        const itemsPerView = getItemsPerView();
+        const maxIndex = Math.max(0, slides.length - itemsPerView);
+        currentServiceIndex = currentServiceIndex >= maxIndex ? 0 : currentServiceIndex + 1;
+        updateServicesCarousel();
+      }
+    }, 3500);
+
+    window.addEventListener('resize', updateServicesCarousel);
+    updateServicesCarousel();
+  }
+
   updateQuoteSummary();
 });
