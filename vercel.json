@@ -1,5 +1,6 @@
 {
-  "cleanUrls": false,
+  "version": 2,
+  "cleanUrls": true,
   "headers": [
     {
       "source": "/(.*)",

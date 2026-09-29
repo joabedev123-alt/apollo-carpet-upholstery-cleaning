@@ -4,6 +4,7 @@
   "description": "Apollo Carpet & Upholstery Cleaning Website",
   "main": "index.html",
   "scripts": {
+    "build": "echo 'Static build ready'",
     "dev": "node server.js",
     "start": "node server.js",
     "serve": "node server.js"
