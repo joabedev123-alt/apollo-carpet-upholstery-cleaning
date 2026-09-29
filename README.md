@@ -1,43 +1,78 @@
-# Apollo Carpet & Upholstery Cleaning - Website
+# Apollo Carpet & Upholstery Cleaning — Official Website
 
-Modern, mobile-first, high-converting website built for **Apollo Carpet & Upholstery Cleaning**, servicing Orlando, Kissimmee, Davenport, Windermere, and Ocoee in Central Florida.
+Modern, mobile-first, high-converting multilingual website built for **Apollo Carpet & Upholstery Cleaning**, servicing Orlando, Kissimmee, Winter Park, Davenport, Windermere, Ocoee, Dr. Phillips, Lake Nona, Celebration, and Clermont across Central Florida.
+
+---
 
 ## 🎨 Visual Identity & Design System
-- **Colors**:
-  - Primary Navy: `#0b2545` (Headers, buttons, footer, branding)
-  - Accent Sky/Cyan: `#00a8e8` (Icons, dividers, badges, interactive highlights)
-  - Neutral Backgrounds: `#ffffff` & `#f8fafc`
-- **Typography**: `Outfit` (Google Fonts) with smooth fallback stack.
-- **Icons**: Bootstrap Icons (CDN).
 
-## 🚀 Key Features
-1. **Mobile-First Compact Navigation**: Clean white top header with Apollo logo, prominent direct call button `(321) 272-5560`, and interactive sliding mobile drawer.
-2. **Hero Section**: High-resolution photorealistic imagery of residential extraction cleaning, clear call to actions ("Get a Free Quote", direct calling, and WhatsApp).
-3. **Dedicated Cleaning Services Grid**:
-   - Carpet Cleaning (Hot Water Extraction)
-   - Sofas & Sectionals
-   - Upholstery Cleaning
-   - Area Rugs Care
-   - Mattresses Sanitization
-   - Dining & Accent Chairs
-   - House Cleaning (Weekly / Bi-Weekly, One-Time Deep Clean, Move-In / Move-Out)
-4. **Before & After Interactive Showcase**:
-   - Split comparison slider with touch and drag handle.
-   - Real item restoration photos (Dining chairs, upholstered headboard/cushions, carpets).
-5. **Why Choose Apollo**: Vertical blocks detailing industrial hot water extraction, fiber-safe eco-friendly solutions, meticulous attention to detail, and fast drying.
-6. **Service Areas**: Highlighted Central Florida coverage (Orlando, Kissimmee, Davenport, Windermere, Ocoee).
-7. **FAQ Accordion**: Common questions on drying time (4-8 hours), methods, pet stains, and appointment prep.
-8. **Interactive Custom Quote Form**:
-   - Multi-service selection with dynamic input toggles (rooms, flights of stairs, sofa types, rugs, mattresses, house cleaning scopes).
-   - Real-time quote item summary.
-   - US phone number auto-masking `(XXX) XXX-XXXX`.
-   - Direct integration payload targeted to `contact@apollocarpetcleaning.com`.
-   - Instant WhatsApp one-click transmission of quote request details.
-9. **Footer & Contact Actions**: Dark navy footer with full service links, city list, contact info, and floating WhatsApp quick button.
+- **Primary Colors**:
+  - Primary Navy: `#0b2545` (Headers, buttons, footer, branding)
+  - Primary Deep Navy: `#07172b`
+  - Accent Cyan: `#00a8e8` (Icons, dividers, badges, interactive highlights)
+  - Accent Dark Cyan: `#008cc2`
+  - Neutral Backgrounds: `#ffffff`, `#f8fafc`, and `#f1f5f9`
+- **Typography**: `Outfit` (Google Fonts) with system fallbacks.
+- **Icons**: Bootstrap Icons (CDN).
+- **Flag Assets**: Precision Vector SVGs (`/assets/images/flags/us.svg`, `es.svg`, `br.svg`).
+
+---
+
+## 🌐 Multilingual i18n Architecture
+
+The application includes an instant dynamic translation system supporting 3 full locales with persistence in `localStorage`:
+
+- 🇺🇸 **English (`en`)**: Complete US localized texts, headers, quote calculator, and WhatsApp payloads.
+- 🇪🇸 **Spanish (`es`)**: Complete Spanish localized texts, headers, quote calculator, and WhatsApp payloads.
+- 🇧🇷 **Portuguese (`pt`)**: Complete Brazilian Portuguese localized texts, headers, quote calculator, and WhatsApp payloads.
+
+---
+
+## 📱 Mobile-First & Performance Optimizations
+
+1. **Touch Ergonomics & Safe Area**:
+   - `touch-action: manipulation` and `-webkit-tap-highlight-color: transparent` for instant response without tap delay.
+   - iOS Safe-Area support (`viewport-fit=cover` & `env(safe-area-inset-*)`).
+   - Inputs formatted to `16px` to avoid automatic zoom on iOS Safari.
+2. **Interactive Carousels**:
+   - Touch swipe gesture support on mobile devices.
+   - Verified Results auto-rotating carousel.
+   - Real Work Photo Gallery with high-definition assets.
+3. **Hero Section Video**:
+   - Dedicated streaming video (`video 01.mp4`) with HTTP 206 Partial Content Range support for instant playback.
+   - Interactive Mute / Unmute controls.
+4. **Interactive Quote Calculator**:
+   - Dynamic service selector (Carpet, Sofas, Rugs, Mattresses, Chairs, House Cleaning).
+   - Real-time localized summary calculation.
+   - Instant 1-click WhatsApp formatted quote dispatch.
+
+---
+
+## 🛠️ Getting Started Locally
+
+### Option 1: Native Node.js Server (Recommended for Media Streaming)
+```bash
+# Install dependencies
+npm install
+
+# Start local server with video streaming support
+npm run serve
+# Or specify a custom port:
+# PORT=3008 npm run serve
+```
+Access at: `http://localhost:3000/` (or specified port).
+
+### Option 2: Next.js Development Server
+```bash
+npm run dev
+```
+
+---
 
 ## 📞 Company Contact Details
-- **Name**: Apollo Carpet & Upholstery Cleaning
-- **Phone / WhatsApp**: +1 (321) 272-5560
-- **Quotes Email**: contact@apollocarpetcleaning.com
-- **Facebook**: Apollo carpet & upholstery cleaning
-- **Service Areas**: Orlando, Kissimmee, Davenport, Windermere, and Ocoee (Central Florida)
+
+- **Company**: Apollo Carpet & Upholstery Cleaning
+- **Direct Phone / WhatsApp**: +1 (321) 272-5560
+- **Email**: contact@apollocarpetcleaning.com
+- **Service Areas**: Orlando, Kissimmee, Winter Park, Davenport, Windermere, Ocoee, Dr. Phillips, Lake Nona, Celebration, and Clermont (Central Florida)
+- **Hours**: Monday – Saturday: 7:30 AM – 7:00 PM | Sunday: By Appointment

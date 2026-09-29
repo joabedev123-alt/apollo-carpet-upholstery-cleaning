@@ -5,7 +5,7 @@ out/
 .DS_Store
 Thumbs.db
 
-# Raw media / source folders not used in production
+# Source / Raw Unused Media Folders
 assets_images/
 ref_images/
 assets/videos de limpesa/
@@ -14,30 +14,24 @@ assets/colchoes/
 assets/imagens carossel/
 assets/images seção 1/
 assets/seção 3/
-assets/*.jpeg
-assets/*.jpg
-assets/*.png
-assets/*.mp4
 
-# Unused videos in production
-assets/videos/apollo_work_video_1.mp4
-assets/videos/apollo_work_video_7.mp4
-assets/videos/apollo_work_video_9.mp4
-assets/videos/apollo_work_video_10.mp4
-assets/videos/apollo_work_video_11.mp4
-assets/videos/apollo_work_video_12.mp4
-assets/videos/apollo_work_video_13.mp4
-assets/videos/apollo_work_video_14.mp4
-assets/videos/apollo_work_video_15.mp4
-assets/videos/apollo_work_video_16.mp4
-assets/videos/apollo_work_video_17.mp4
-assets/videos/apollo_work_video_18.mp4
-assets/videos/apollo_work_video_19.mp4
-
-# Large archives (GitHub 100MB limit)
+# Large archives
 *.zip
+*.tar.gz
 
 # Logs & temp
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 .vscode/
 .idea/
+
+# Exceptions for production media
+!assets/flags/*.svg
+!assets/images/flags/*.svg
+!public/flags/*.svg
+!assets/video_01.mp4
+!assets/images/video_01.mp4
+!public/video_01.mp4
+
