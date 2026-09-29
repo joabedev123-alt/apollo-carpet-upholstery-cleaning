@@ -1,5 +1,7 @@
 # Dependencies & OS files
 node_modules/
+.next/
+out/
 .DS_Store
 Thumbs.db
 
