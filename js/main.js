@@ -55,78 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // --- 2. Real Work Video Showcase Player (From Pasta imagens 02) ---
-  const mainVideo = document.getElementById('apolloMainVideo');
-  const videoItemBtns = document.querySelectorAll('.video-item-btn');
-  const videoThumbCards = document.querySelectorAll('.video-card-thumb');
-
-  function setVideoSource(videoSrc) {
-    if (!mainVideo || !videoSrc) return;
-    
-    try {
-      mainVideo.pause();
-    } catch (e) {}
-
-    // Update source child element if exists
-    const sourceEl = mainVideo.querySelector('source');
-    if (sourceEl) {
-      sourceEl.src = videoSrc;
-    }
-    mainVideo.src = videoSrc;
-    mainVideo.load();
-
-    const playPromise = mainVideo.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(function () {
-        // Fallback for browsers that restrict unmuted autoplay without user direct gesture
-        mainVideo.muted = true;
-        mainVideo.play().catch(function (err) {
-          console.warn('Video playback ready on user click:', err);
-        });
-      });
-    }
-  }
-
-  window.playVideoClip = function (videoSrc) {
-    setVideoSource(videoSrc);
-    const videoSection = document.getElementById('videos');
-    if (videoSection) {
-      videoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    // Highlight active sidebar item
-    videoItemBtns.forEach(function (b) {
-      if (b.getAttribute('data-src') === videoSrc) {
-        b.classList.add('active');
-      } else {
-        b.classList.remove('active');
-      }
-    });
-
-    // Highlight active grid card
-    videoThumbCards.forEach(function (card) {
-      if (card.getAttribute('onclick') && card.getAttribute('onclick').includes(videoSrc)) {
-        card.style.borderColor = 'var(--accent-cyan)';
-        card.style.backgroundColor = '#f0f9ff';
-      } else {
-        card.style.borderColor = '';
-        card.style.backgroundColor = '';
-      }
-    });
-  };
-
-  if (mainVideo && videoItemBtns.length > 0) {
-    videoItemBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        const videoSrc = this.getAttribute('data-src');
-        videoItemBtns.forEach(function (b) { b.classList.remove('active'); });
-        this.classList.add('active');
-        setVideoSource(videoSrc);
-      });
-    });
-  }
-
-  // --- 3. Verified Work Results Automatic Slider (2-second interval & manual controls) ---
+  // --- 2. Verified Work Results Automatic Slider (2-second interval & manual controls) ---
   const resultsCarousel = document.getElementById('resultsCarousel');
   const resultsSlides = document.querySelectorAll('.results-slide-card');
   const resultsDots = document.querySelectorAll('.results-dot');

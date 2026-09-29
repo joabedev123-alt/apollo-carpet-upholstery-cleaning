@@ -12,49 +12,6 @@ export default function HomePage() {
   const heroVideoRef = useRef(null);
   const [isHeroMuted, setIsHeroMuted] = useState(true);
 
-  // Video Playlist State
-  const mainVideoRef = useRef(null);
-  const [currentVideoSrc, setCurrentVideoSrc] = useState('/assets/videos/apollo_work_video_8.mp4');
-
-  const videoPlaylist = [
-    {
-      id: 1,
-      title: '1. Deep Fabric Clean (Demo #8)',
-      desc: 'High extraction power pulling embedded dirt',
-      src: '/assets/videos/apollo_work_video_8.mp4',
-    },
-    {
-      id: 2,
-      title: '2. Sofa Cushion Dirt Removal',
-      desc: 'Clear extraction tool showing instant color revival',
-      src: '/assets/videos/apollo_work_video_2.mp4',
-    },
-    {
-      id: 3,
-      title: '3. Tufted Fabric & Seam Detailing',
-      desc: 'Precision cleaning along buttons and tufted creases',
-      src: '/assets/videos/apollo_work_video_3.mp4',
-    },
-    {
-      id: 4,
-      title: '4. Heavy Traffic Soil Extraction',
-      desc: 'High-pressure flush and powerful moisture recovery',
-      src: '/assets/videos/apollo_work_video_4.mp4',
-    },
-    {
-      id: 5,
-      title: '5. Dining Chair Precision Detailing',
-      desc: 'Targeted stain lifting on delicate textured fabric',
-      src: '/assets/videos/apollo_work_video_5.mp4',
-    },
-    {
-      id: 6,
-      title: '6. Mattress Deep Sanitizing Pass',
-      desc: 'Micro-dust, sweat and allergen extraction',
-      src: '/assets/videos/apollo_work_video_6.mp4',
-    },
-  ];
-
   // Verified Results Carousel State
   const [currentResultIndex, setCurrentResultIndex] = useState(0);
   const resultsSlides = [
@@ -293,16 +250,6 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, [resultsSlides.length]);
 
-  // Video source switch
-  const handlePlayVideo = (src) => {
-    setCurrentVideoSrc(src);
-    if (mainVideoRef.current) {
-      mainVideoRef.current.src = src;
-      mainVideoRef.current.load();
-      mainVideoRef.current.play().catch(() => {});
-    }
-  };
-
   // Hero Audio Toggle
   const toggleHeroAudio = () => {
     if (heroVideoRef.current) {
@@ -438,9 +385,6 @@ export default function HomePage() {
                 Our Work <i className="bi bi-chevron-down" style={{ fontSize: '0.75rem', marginLeft: '2px' }}></i>
               </span>
               <div className="nav-dropdown-menu">
-                <a href="#videos" className="dropdown-item">
-                  <i className="bi bi-play-circle-fill"></i> Live Video Demos
-                </a>
                 <a href="#before-after" className="dropdown-item">
                   <i className="bi bi-images"></i> Verified Results
                 </a>
@@ -507,10 +451,6 @@ export default function HomePage() {
           </a>
           <a href="#services" className="mobile-nav-link" onClick={() => setIsMobileNavOpen(false)}>
             <span>Our Cleaning Services</span>
-            <i className="bi bi-chevron-right"></i>
-          </a>
-          <a href="#videos" className="mobile-nav-link" onClick={() => setIsMobileNavOpen(false)}>
-            <span>Live Work Videos</span>
             <i className="bi bi-chevron-right"></i>
           </a>
           <a href="#before-after" className="mobile-nav-link" onClick={() => setIsMobileNavOpen(false)}>
@@ -745,57 +685,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. Real Work in Action - Video Showcase */}
-      <section className="video-section" id="videos">
-        <div className="container">
-          <div className="text-center">
-            <h2 className="section-title">See Apollo's Real Work in Action</h2>
-            <p className="section-subtitle">
-              Watch real extraction footage recorded on-site showing how our high-vacuum extraction tools pull deep dirt from upholstery fabrics and cushions.
-            </p>
-          </div>
-
-          <div className="video-player-container">
-            <div className="video-main-display">
-              <video
-                ref={mainVideoRef}
-                id="apolloMainVideo"
-                controls
-                playsInline
-                preload="metadata"
-                poster="/assets/images/img_03.png"
-              >
-                <source src={currentVideoSrc} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-
-            <div className="video-playlist-sidebar">
-              <div className="video-playlist-header">
-                <i className="bi bi-film"></i>
-                <span>Featured Video Playlist:</span>
-              </div>
-              <div className="video-playlist-items">
-                {videoPlaylist.map((item) => (
-                  <button
-                    key={item.id}
-                    className={`video-item-btn ${currentVideoSrc === item.src ? 'active' : ''}`}
-                    onClick={() => handlePlayVideo(item.src)}
-                  >
-                    <div className="video-item-icon"><i className="bi bi-play-fill"></i></div>
-                    <div className="video-item-info">
-                      <h4>{item.title}</h4>
-                      <span>{item.desc}</span>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. Verified Work Results Carousel */}
+      {/* 6. Verified Work Results Carousel */}
       <section className="before-after-section" id="before-after">
         <div className="container">
           <div className="text-center">
