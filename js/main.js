@@ -542,5 +542,111 @@ document.addEventListener('DOMContentLoaded', function () {
     updateServicesCarousel();
   }
 
+  // --- 7. Real Job Gallery Carousel Controller ---
+  const galleryWrap = document.getElementById('galleryCarouselWrap');
+  const galleryTrack = document.getElementById('galleryCarouselTrack');
+  const galleryPrevBtn = document.getElementById('galleryPrevBtn');
+  const galleryNextBtn = document.getElementById('galleryNextBtn');
+  const galleryDotsRow = document.getElementById('galleryDotsRow');
+
+  if (galleryWrap && galleryTrack) {
+    const gallerySlides = galleryTrack.querySelectorAll('.gallery-slide-item');
+    let currentGalleryIndex = 0;
+    let isGalleryHovered = false;
+
+    function getGalleryItemsPerView() {
+      if (window.innerWidth < 640) return 1;
+      if (window.innerWidth < 1024) return 2;
+      return 3;
+    }
+
+    function updateGalleryCarousel() {
+      const itemsPerView = getGalleryItemsPerView();
+      const maxIndex = Math.max(0, gallerySlides.length - itemsPerView);
+      if (currentGalleryIndex > maxIndex) {
+        currentGalleryIndex = maxIndex;
+      }
+      const itemWidthPercent = 100 / itemsPerView;
+      galleryTrack.style.transform = `translateX(-${currentGalleryIndex * itemWidthPercent}%)`;
+
+      // Update dots
+      if (galleryDotsRow) {
+        galleryDotsRow.innerHTML = '';
+        const dotCount = maxIndex + 1;
+        for (let i = 0; i < dotCount; i++) {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = `gallery-dot-btn ${i === currentGalleryIndex ? 'active' : ''}`;
+          dot.setAttribute('aria-label', `Go to gallery slide ${i + 1}`);
+          dot.addEventListener('click', () => {
+            currentGalleryIndex = i;
+            updateGalleryCarousel();
+          });
+          galleryDotsRow.appendChild(dot);
+        }
+      }
+    }
+
+    if (galleryPrevBtn) {
+      galleryPrevBtn.addEventListener('click', () => {
+        const itemsPerView = getGalleryItemsPerView();
+        const maxIndex = Math.max(0, gallerySlides.length - itemsPerView);
+        currentGalleryIndex = currentGalleryIndex <= 0 ? maxIndex : currentGalleryIndex - 1;
+        updateGalleryCarousel();
+      });
+    }
+
+    if (galleryNextBtn) {
+      galleryNextBtn.addEventListener('click', () => {
+        const itemsPerView = getGalleryItemsPerView();
+        const maxIndex = Math.max(0, gallerySlides.length - itemsPerView);
+        currentGalleryIndex = currentGalleryIndex >= maxIndex ? 0 : currentGalleryIndex + 1;
+        updateGalleryCarousel();
+      });
+    }
+
+    // Touch swipe support
+    let touchStartX = 0;
+    galleryWrap.addEventListener('touchstart', (e) => {
+      isGalleryHovered = true;
+      if (e.touches && e.touches[0]) {
+        touchStartX = e.touches[0].clientX;
+      }
+    }, { passive: true });
+
+    galleryWrap.addEventListener('touchend', (e) => {
+      isGalleryHovered = false;
+      if (e.changedTouches && e.changedTouches[0]) {
+        const diffX = touchStartX - e.changedTouches[0].clientX;
+        const itemsPerView = getGalleryItemsPerView();
+        const maxIndex = Math.max(0, gallerySlides.length - itemsPerView);
+        if (Math.abs(diffX) > 40) {
+          if (diffX > 0) {
+            currentGalleryIndex = currentGalleryIndex >= maxIndex ? 0 : currentGalleryIndex + 1;
+          } else {
+            currentGalleryIndex = currentGalleryIndex <= 0 ? maxIndex : currentGalleryIndex - 1;
+          }
+          updateGalleryCarousel();
+        }
+      }
+    }, { passive: true });
+
+    galleryWrap.addEventListener('mouseenter', () => { isGalleryHovered = true; });
+    galleryWrap.addEventListener('mouseleave', () => { isGalleryHovered = false; });
+
+    // Auto-slide interval
+    setInterval(() => {
+      if (!isGalleryHovered) {
+        const itemsPerView = getGalleryItemsPerView();
+        const maxIndex = Math.max(0, gallerySlides.length - itemsPerView);
+        currentGalleryIndex = currentGalleryIndex >= maxIndex ? 0 : currentGalleryIndex + 1;
+        updateGalleryCarousel();
+      }
+    }, 3500);
+
+    window.addEventListener('resize', updateGalleryCarousel);
+    updateGalleryCarousel();
+  }
+
   updateQuoteSummary();
 });

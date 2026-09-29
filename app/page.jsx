@@ -158,6 +158,51 @@ export default function HomePage() {
   const isServicesHovered = useRef(false);
   const servicesTouchStartX = useRef(0);
 
+  // Real Job Gallery Slides State
+  const gallerySlides = [
+    {
+      id: 1,
+      img: '/assets/images/gallery_sec3_01.png',
+      title: 'Patterned Dining Chairs',
+      subtitle: 'Patterned Dining Chairs',
+    },
+    {
+      id: 2,
+      img: '/assets/images/gallery_sec3_02.png',
+      title: 'Clean Fabric Revival',
+      subtitle: 'Clean Fabric Revival',
+    },
+    {
+      id: 3,
+      img: '/assets/images/gallery_sec3_03.png',
+      title: 'Detail & Texture Rejuvenation',
+      subtitle: 'Detail & Texture Rejuvenation',
+    },
+    {
+      id: 4,
+      img: '/assets/images/gallery_sec3_04.png',
+      title: 'Headboard & Cushion Sanitization',
+      subtitle: 'Headboard & Cushion Sanitization',
+    },
+    {
+      id: 5,
+      img: '/assets/images/gallery_sec3_05.png',
+      title: 'Tufted Upholstery Care',
+      subtitle: 'Tufted Upholstery Care',
+    },
+    {
+      id: 6,
+      img: '/assets/images/gallery_sec3_06.png',
+      title: 'Residential Living Furniture',
+      subtitle: 'Residential Living Furniture',
+    },
+  ];
+
+  const [currentGalleryIndex, setCurrentGalleryIndex] = useState(0);
+  const [galleryItemsPerView, setGalleryItemsPerView] = useState(3);
+  const isGalleryHovered = useRef(false);
+  const galleryTouchStartX = useRef(0);
+
   // Touch Swipe coordinates for verified results carousel
   const touchStartX = useRef(0);
   const isCarouselHovered = useRef(false);
@@ -227,6 +272,22 @@ export default function HomePage() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Responsive items per view for Gallery Carousel
+  useEffect(() => {
+    const handleGalleryResize = () => {
+      if (window.innerWidth < 640) {
+        setGalleryItemsPerView(1);
+      } else if (window.innerWidth < 1024) {
+        setGalleryItemsPerView(2);
+      } else {
+        setGalleryItemsPerView(3);
+      }
+    };
+    handleGalleryResize();
+    window.addEventListener('resize', handleGalleryResize);
+    return () => window.removeEventListener('resize', handleGalleryResize);
+  }, []);
+
   // Services Carousel Auto-slide (every 3.5s)
   useEffect(() => {
     const interval = setInterval(() => {
@@ -239,6 +300,19 @@ export default function HomePage() {
     }, 3500);
     return () => clearInterval(interval);
   }, [servicesSlides.length, itemsPerView]);
+
+  // Gallery Carousel Auto-slide (every 3.5s)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!isGalleryHovered.current) {
+        setCurrentGalleryIndex((prev) => {
+          const maxIdx = Math.max(0, gallerySlides.length - galleryItemsPerView);
+          return prev >= maxIdx ? 0 : prev + 1;
+        });
+      }
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [gallerySlides.length, galleryItemsPerView]);
 
   // Verified Results Carousel auto-slide timer (every 2 seconds)
   useEffect(() => {
@@ -795,54 +869,81 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="photo-grid">
-            <div className="photo-card">
-              <div className="photo-card-img-wrap">
-                <img src="/assets/images/gallery_sec3_01.png" alt="Patterned Dining Chairs" loading="lazy" />
-              </div>
-              <div className="photo-card-caption">
-                <h4>Patterned Dining Chairs</h4>
-              </div>
+          <div
+            className="gallery-carousel-wrap"
+            onMouseEnter={() => { isGalleryHovered.current = true; }}
+            onMouseLeave={() => { isGalleryHovered.current = false; }}
+            onTouchStart={(e) => {
+              isGalleryHovered.current = true;
+              if (e.touches && e.touches[0]) {
+                galleryTouchStartX.current = e.touches[0].clientX;
+              }
+            }}
+            onTouchEnd={(e) => {
+              isGalleryHovered.current = false;
+              if (e.changedTouches && e.changedTouches[0]) {
+                const diffX = galleryTouchStartX.current - e.changedTouches[0].clientX;
+                if (Math.abs(diffX) > 40) {
+                  if (diffX > 0) {
+                    setCurrentGalleryIndex((prev) => (prev >= gallerySlides.length - galleryItemsPerView ? 0 : prev + 1));
+                  } else {
+                    setCurrentGalleryIndex((prev) => (prev <= 0 ? Math.max(0, gallerySlides.length - galleryItemsPerView) : prev - 1));
+                  }
+                }
+              }
+            }}
+          >
+            <div
+              className="gallery-carousel-track"
+              style={{
+                transform: `translateX(-${currentGalleryIndex * (100 / galleryItemsPerView)}%)`,
+              }}
+            >
+              {gallerySlides.map((slide) => (
+                <div key={slide.id} className="gallery-slide-item">
+                  <div className="photo-card">
+                    <div className="photo-card-img-wrap">
+                      <img src={slide.img} alt={slide.title} loading="lazy" />
+                    </div>
+                    <div className="photo-card-caption">
+                      <h4>{slide.title}</h4>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="photo-card">
-              <div className="photo-card-img-wrap">
-                <img src="/assets/images/gallery_sec3_02.png" alt="Clean Fabric Revival" loading="lazy" />
+
+            {/* Gallery Navigation Controls */}
+            <div className="gallery-carousel-controls">
+              <button
+                type="button"
+                className="gallery-nav-arrow"
+                onClick={() => setCurrentGalleryIndex((prev) => (prev <= 0 ? Math.max(0, gallerySlides.length - galleryItemsPerView) : prev - 1))}
+                aria-label="Previous Gallery Slide"
+              >
+                <i className="bi bi-chevron-left"></i>
+              </button>
+
+              <div className="gallery-dots-row">
+                {Array.from({ length: Math.max(1, gallerySlides.length - galleryItemsPerView + 1) }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className={`gallery-dot-btn ${idx === currentGalleryIndex ? 'active' : ''}`}
+                    onClick={() => setCurrentGalleryIndex(idx)}
+                    aria-label={`Go to gallery slide ${idx + 1}`}
+                  ></button>
+                ))}
               </div>
-              <div className="photo-card-caption">
-                <h4>Clean Fabric Revival</h4>
-              </div>
-            </div>
-            <div className="photo-card">
-              <div className="photo-card-img-wrap">
-                <img src="/assets/images/gallery_sec3_03.png" alt="Detail & Texture Rejuvenation" loading="lazy" />
-              </div>
-              <div className="photo-card-caption">
-                <h4>Detail &amp; Texture Rejuvenation</h4>
-              </div>
-            </div>
-            <div className="photo-card">
-              <div className="photo-card-img-wrap">
-                <img src="/assets/images/gallery_sec3_04.png" alt="Headboard & Cushion Sanitization" loading="lazy" />
-              </div>
-              <div className="photo-card-caption">
-                <h4>Headboard &amp; Cushion Sanitization</h4>
-              </div>
-            </div>
-            <div className="photo-card">
-              <div className="photo-card-img-wrap">
-                <img src="/assets/images/gallery_sec3_05.png" alt="Tufted Upholstery Care" loading="lazy" />
-              </div>
-              <div className="photo-card-caption">
-                <h4>Tufted Upholstery Care</h4>
-              </div>
-            </div>
-            <div className="photo-card">
-              <div className="photo-card-img-wrap">
-                <img src="/assets/images/gallery_sec3_06.png" alt="Residential Living Furniture" loading="lazy" />
-              </div>
-              <div className="photo-card-caption">
-                <h4>Residential Living Furniture</h4>
-              </div>
+
+              <button
+                type="button"
+                className="gallery-nav-arrow"
+                onClick={() => setCurrentGalleryIndex((prev) => (prev >= gallerySlides.length - galleryItemsPerView ? 0 : prev + 1))}
+                aria-label="Next Gallery Slide"
+              >
+                <i className="bi bi-chevron-right"></i>
+              </button>
             </div>
           </div>
         </div>

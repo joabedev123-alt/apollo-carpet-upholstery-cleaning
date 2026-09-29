@@ -1446,6 +1446,99 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
+   Gallery Carousel Section
+   ========================================================================== */
+
+.gallery-carousel-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 10px 0 20px;
+}
+
+.gallery-carousel-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  margin: 0 -10px;
+  width: 100%;
+}
+
+.gallery-slide-item {
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .gallery-slide-item {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery-slide-item {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+}
+
+.gallery-carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 26px;
+}
+
+.gallery-nav-arrow {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--bg-white);
+  border: 1.5px solid var(--border-light);
+  color: var(--primary-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+
+.gallery-nav-arrow:hover {
+  background: var(--primary-navy);
+  color: var(--text-white);
+  border-color: var(--primary-navy);
+  transform: scale(1.08);
+}
+
+.gallery-dots-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gallery-dot-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--border-light);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.gallery-dot-btn.active {
+  width: 32px;
+  border-radius: var(--radius-full);
+  background: var(--accent-cyan);
+}
+
+/* ==========================================================================
    Verified Results Auto Slider Section
    ========================================================================== */
 

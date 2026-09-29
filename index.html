@@ -625,59 +625,92 @@
         </p>
       </div>
 
-      <div class="photo-grid">
-        <div class="photo-card">
-          <div class="photo-card-img-wrap">
-            <img src="/assets/images/gallery_sec3_01.png" alt="Patterned Dining Chairs" loading="lazy">
+      <div class="gallery-carousel-wrap" id="galleryCarouselWrap">
+        <div class="gallery-carousel-track" id="galleryCarouselTrack">
+          <!-- 1. Patterned Dining Chairs -->
+          <div class="gallery-slide-item">
+            <div class="photo-card">
+              <div class="photo-card-img-wrap">
+                <img src="/assets/images/gallery_sec3_01.png" alt="Patterned Dining Chairs" loading="lazy">
+              </div>
+              <div class="photo-card-caption">
+                <h4>Patterned Dining Chairs</h4>
+              </div>
+            </div>
           </div>
-          <div class="photo-card-caption">
-            <h4>Patterned Dining Chairs</h4>
+
+          <!-- 2. Clean Fabric Revival -->
+          <div class="gallery-slide-item">
+            <div class="photo-card">
+              <div class="photo-card-img-wrap">
+                <img src="/assets/images/gallery_sec3_02.png" alt="Clean Fabric Revival" loading="lazy">
+              </div>
+              <div class="photo-card-caption">
+                <h4>Clean Fabric Revival</h4>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Detail & Texture Rejuvenation -->
+          <div class="gallery-slide-item">
+            <div class="photo-card">
+              <div class="photo-card-img-wrap">
+                <img src="/assets/images/gallery_sec3_03.png" alt="Detail & Texture Rejuvenation" loading="lazy">
+              </div>
+              <div class="photo-card-caption">
+                <h4>Detail & Texture Rejuvenation</h4>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Headboard & Cushion Sanitization -->
+          <div class="gallery-slide-item">
+            <div class="photo-card">
+              <div class="photo-card-img-wrap">
+                <img src="/assets/images/gallery_sec3_04.png" alt="Headboard & Cushion Sanitization" loading="lazy">
+              </div>
+              <div class="photo-card-caption">
+                <h4>Headboard & Cushion Sanitization</h4>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Tufted Upholstery Care -->
+          <div class="gallery-slide-item">
+            <div class="photo-card">
+              <div class="photo-card-img-wrap">
+                <img src="/assets/images/gallery_sec3_05.png" alt="Tufted Upholstery Care" loading="lazy">
+              </div>
+              <div class="photo-card-caption">
+                <h4>Tufted Upholstery Care</h4>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Residential Living Furniture -->
+          <div class="gallery-slide-item">
+            <div class="photo-card">
+              <div class="photo-card-img-wrap">
+                <img src="/assets/images/gallery_sec3_06.png" alt="Residential Living Furniture" loading="lazy">
+              </div>
+              <div class="photo-card-caption">
+                <h4>Residential Living Furniture</h4>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="photo-card">
-          <div class="photo-card-img-wrap">
-            <img src="/assets/images/gallery_sec3_02.png" alt="Clean Fabric Revival" loading="lazy">
+        <!-- Gallery Carousel Controls -->
+        <div class="gallery-carousel-controls">
+          <button type="button" class="gallery-nav-arrow" id="galleryPrevBtn" aria-label="Previous Gallery Slide">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          <div class="gallery-dots-row" id="galleryDotsRow">
+            <!-- Gerado dinamicamente via JS -->
           </div>
-          <div class="photo-card-caption">
-            <h4>Clean Fabric Revival</h4>
-          </div>
-        </div>
-
-        <div class="photo-card">
-          <div class="photo-card-img-wrap">
-            <img src="/assets/images/gallery_sec3_03.png" alt="Detail & Texture Rejuvenation" loading="lazy">
-          </div>
-          <div class="photo-card-caption">
-            <h4>Detail & Texture Rejuvenation</h4>
-          </div>
-        </div>
-
-        <div class="photo-card">
-          <div class="photo-card-img-wrap">
-            <img src="/assets/images/gallery_sec3_04.png" alt="Headboard & Cushion Sanitization" loading="lazy">
-          </div>
-          <div class="photo-card-caption">
-            <h4>Headboard & Cushion Sanitization</h4>
-          </div>
-        </div>
-
-        <div class="photo-card">
-          <div class="photo-card-img-wrap">
-            <img src="/assets/images/gallery_sec3_05.png" alt="Tufted Upholstery Care" loading="lazy">
-          </div>
-          <div class="photo-card-caption">
-            <h4>Tufted Upholstery Care</h4>
-          </div>
-        </div>
-
-        <div class="photo-card">
-          <div class="photo-card-img-wrap">
-            <img src="/assets/images/gallery_sec3_06.png" alt="Residential Living Furniture" loading="lazy">
-          </div>
-          <div class="photo-card-caption">
-            <h4>Residential Living Furniture</h4>
-          </div>
+          <button type="button" class="gallery-nav-arrow" id="galleryNextBtn" aria-label="Next Gallery Slide">
+            <i class="bi bi-chevron-right"></i>
+          </button>
         </div>
       </div>
     </div>
