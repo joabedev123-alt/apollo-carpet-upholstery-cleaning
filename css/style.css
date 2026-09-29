@@ -1918,118 +1918,151 @@ h1, h2, h3, h4, h5, h6 {
    Service Areas Section (Compact Design)
    ========================================================================== */
 
+/* ==========================================================================
+   Service Areas Section (Full Coverage & Compact Badge Styles)
+   ========================================================================== */
+
 .areas-section {
-  padding: 50px 0;
+  padding: 60px 0;
   background-color: var(--bg-white);
+  position: relative;
 }
 
-.areas-box.areas-box-compact {
+.areas-box,
+.areas-box-compact {
   background: linear-gradient(135deg, var(--primary-navy-dark) 0%, var(--primary-navy) 100%);
   border-radius: var(--radius-lg);
-  padding: 30px 24px;
+  padding: 36px 24px;
   color: var(--text-white);
-  box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(0, 168, 232, 0.2);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(0, 168, 232, 0.3);
+  position: relative;
+  overflow: hidden;
 }
 
 @media (min-width: 768px) {
-  .areas-box.areas-box-compact {
-    padding: 36px 36px;
+  .areas-box,
+  .areas-box-compact {
+    padding: 44px 36px;
   }
 }
 
-.areas-header.areas-header-compact {
+.areas-header,
+.areas-header-compact {
   text-align: center;
-  max-width: 650px;
-  margin: 0 auto 24px;
+  max-width: 700px;
+  margin: 0 auto 28px;
 }
 
-.areas-header.areas-header-compact .section-tag {
+.areas-header .section-tag,
+.areas-header-compact .section-tag {
   background: rgba(0, 168, 232, 0.2);
   color: var(--accent-cyan);
   border-color: rgba(0, 168, 232, 0.4);
-  margin-bottom: 8px;
+  margin: 0 auto 12px;
 }
 
-.areas-header.areas-header-compact h2 {
+.areas-header h2,
+.areas-header-compact h2 {
   color: var(--text-white);
-  font-size: 1.65rem;
-  margin-bottom: 6px;
+  font-size: 1.85rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  line-height: 1.25;
 }
 
-.areas-header.areas-header-compact p {
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 0.92rem;
+.areas-header p,
+.areas-header-compact p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
-.cities-grid.cities-grid-compact {
+.cities-grid,
+.cities-grid-compact,
+.cities-compact-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-bottom: 22px;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 @media (min-width: 540px) {
-  .cities-grid.cities-grid-compact {
+  .cities-grid,
+  .cities-grid-compact,
+  .cities-compact-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (min-width: 900px) {
-  .cities-grid.cities-grid-compact {
+  .cities-grid,
+  .cities-grid-compact,
+  .cities-compact-grid {
     grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
   }
 }
 
 .city-pill-compact {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   transition: all var(--transition-fast);
   text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .city-pill-compact i {
   color: var(--accent-cyan);
-  font-size: 0.95rem;
+  font-size: 1rem;
+  flex-shrink: 0;
 }
 
 .city-pill-compact span {
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: #ffffff;
+  letter-spacing: 0.01em;
 }
 
 .city-pill-compact:hover {
-  background: rgba(0, 168, 232, 0.25);
+  background: rgba(0, 168, 232, 0.3);
   border-color: var(--accent-cyan);
   transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 168, 232, 0.25);
 }
 
-.areas-footer-note.areas-footer-note-compact {
+.areas-footer-note,
+.areas-footer-note-compact {
   text-align: center;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.85rem;
-  background: rgba(0, 0, 0, 0.25);
-  padding: 10px 18px;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.88rem;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 20px;
   border-radius: var(--radius-md);
-  max-width: 650px;
+  max-width: 680px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
+  line-height: 1.4;
 }
 
-.areas-footer-note.areas-footer-note-compact i {
+.areas-footer-note i,
+.areas-footer-note-compact i {
   color: var(--accent-cyan);
-  font-size: 1rem;
+  font-size: 1.15rem;
+  flex-shrink: 0;
 }
 
 /* ==========================================================================
@@ -2039,31 +2072,41 @@ h1, h2, h3, h4, h5, h6 {
 .faq-section {
   padding: 70px 0;
   background-color: var(--bg-soft-gray);
+  position: relative;
 }
 
-.faq-container {
-  max-width: 800px;
+.faq-container,
+.faq-accordion-box {
+  max-width: 860px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .faq-item {
   background: var(--bg-white);
-  border: 1px solid var(--border-light);
+  border: 1.5px solid var(--border-light);
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition-fast);
+  transition: all var(--transition-normal);
 }
 
-.faq-item.active {
-  border-color: var(--accent-cyan);
+.faq-item:hover {
+  border-color: rgba(0, 168, 232, 0.4);
   box-shadow: var(--shadow-md);
 }
 
-.faq-question {
+.faq-item.active,
+.faq-item.open {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 4px 16px rgba(0, 168, 232, 0.15);
+  background: #ffffff;
+}
+
+.faq-question,
+.faq-question-btn {
   width: 100%;
   padding: 20px 24px;
   text-align: left;
@@ -2072,44 +2115,65 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: space-between;
   gap: 16px;
   background: none;
+  border: none;
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--primary-navy);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  line-height: 1.35;
 }
 
-.faq-icon {
-  width: 32px;
-  height: 32px;
+.faq-question:hover,
+.faq-question-btn:hover {
+  color: var(--accent-cyan-dark);
+}
+
+.faq-icon,
+.faq-question-btn i {
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: var(--bg-soft-gray);
+  background: var(--bg-slate);
   color: var(--primary-navy);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   transition: all var(--transition-normal);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
-.faq-item.active .faq-icon {
+.faq-item.active .faq-icon,
+.faq-item.open .faq-icon,
+.faq-item.open .faq-question-btn i {
   background: var(--accent-cyan);
-  color: var(--primary-navy);
+  color: #ffffff;
   transform: rotate(180deg);
 }
 
-.faq-answer {
+.faq-answer,
+.faq-answer-body {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s ease, padding 0.35s ease;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.35s ease;
   padding: 0 24px;
   color: var(--text-body);
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
-.faq-item.active .faq-answer {
-  max-height: 300px;
+.faq-item.active .faq-answer,
+.faq-item.open .faq-answer,
+.faq-item.open .faq-answer-body {
+  max-height: 500px;
   padding: 0 24px 22px;
+}
+
+.faq-answer p,
+.faq-answer-body p {
+  margin: 0;
+  color: var(--text-body);
 }
 
 /* ==========================================================================
