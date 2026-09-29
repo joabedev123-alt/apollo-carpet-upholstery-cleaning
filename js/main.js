@@ -126,65 +126,119 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // --- 3. Before & After Interactive Comparison Slider (From Pasta imagens 01) ---
-  const baViewer = document.getElementById('baViewer');
-  const afterLayer = document.getElementById('afterLayer');
-  const baHandle = document.getElementById('baHandle');
-  let isDragging = false;
+  // --- 3. Verified Work Results Automatic Slider (2-second interval & manual controls) ---
+  const resultsCarousel = document.getElementById('resultsCarousel');
+  const resultsSlides = document.querySelectorAll('.results-slide-card');
+  const resultsDots = document.querySelectorAll('.results-dot');
+  const resultsPrevBtn = document.getElementById('resultsPrevBtn');
+  const resultsNextBtn = document.getElementById('resultsNextBtn');
+  
+  let currentResultIndex = 0;
+  let resultsAutoTimer = null;
+  const slideIntervalMs = 2000; // 2 segundos automático
 
-  function updateSliderPosition(xPos) {
-    if (!baViewer) return;
-    const rect = baViewer.getBoundingClientRect();
-    let x = xPos - rect.left;
-    if (x < 0) x = 0;
-    if (x > rect.width) x = rect.width;
-    const percent = (x / rect.width) * 100;
-    afterLayer.style.width = percent + '%';
-    baHandle.style.left = percent + '%';
+  function showResultSlide(index) {
+    if (resultsSlides.length === 0) return;
+    
+    // Normalizar índice circular
+    if (index >= resultsSlides.length) {
+      currentResultIndex = 0;
+    } else if (index < 0) {
+      currentResultIndex = resultsSlides.length - 1;
+    } else {
+      currentResultIndex = index;
+    }
+
+    resultsSlides.forEach((slide, idx) => {
+      if (idx === currentResultIndex) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+
+    resultsDots.forEach((dot, idx) => {
+      if (idx === currentResultIndex) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
   }
 
-  if (baViewer) {
-    baViewer.addEventListener('mousedown', function (e) {
-      isDragging = true;
-      updateSliderPosition(e.clientX);
+  function startResultsAutoSlide() {
+    stopResultsAutoSlide();
+    resultsAutoTimer = setInterval(function () {
+      showResultSlide(currentResultIndex + 1);
+    }, slideIntervalMs);
+  }
+
+  function stopResultsAutoSlide() {
+    if (resultsAutoTimer) {
+      clearInterval(resultsAutoTimer);
+      resultsAutoTimer = null;
+    }
+  }
+
+  if (resultsCarousel && resultsSlides.length > 0) {
+    // Inicializar slide
+    showResultSlide(0);
+    startResultsAutoSlide();
+
+    // Eventos dos botões
+    if (resultsNextBtn) {
+      resultsNextBtn.addEventListener('click', function () {
+        showResultSlide(currentResultIndex + 1);
+        startResultsAutoSlide();
+      });
+    }
+
+    if (resultsPrevBtn) {
+      resultsPrevBtn.addEventListener('click', function () {
+        showResultSlide(currentResultIndex - 1);
+        startResultsAutoSlide();
+      });
+    }
+
+    // Eventos dos dots
+    resultsDots.forEach(dot => {
+      dot.addEventListener('click', function () {
+        const targetIndex = parseInt(this.getAttribute('data-index'), 10);
+        showResultSlide(targetIndex);
+        startResultsAutoSlide();
+      });
     });
 
-    window.addEventListener('mouseup', function () {
-      isDragging = false;
-    });
+    // Pausar no hover e suporte a gesto de swipe touch no mobile
+    resultsCarousel.addEventListener('mouseenter', stopResultsAutoSlide);
+    resultsCarousel.addEventListener('mouseleave', startResultsAutoSlide);
 
-    window.addEventListener('mousemove', function (e) {
-      if (!isDragging) return;
-      updateSliderPosition(e.clientX);
-    });
+    let touchStartX = 0;
+    let touchEndX = 0;
 
-    baViewer.addEventListener('touchstart', function (e) {
-      isDragging = true;
-      updateSliderPosition(e.touches[0].clientX);
+    resultsCarousel.addEventListener('touchstart', function (e) {
+      stopResultsAutoSlide();
+      if (e.touches && e.touches.length > 0) {
+        touchStartX = e.touches[0].clientX;
+      }
     }, { passive: true });
 
-    window.addEventListener('touchend', function () {
-      isDragging = false;
-    });
-
-    window.addEventListener('touchmove', function (e) {
-      if (!isDragging) return;
-      updateSliderPosition(e.touches[0].clientX);
+    resultsCarousel.addEventListener('touchend', function (e) {
+      if (e.changedTouches && e.changedTouches.length > 0) {
+        touchEndX = e.changedTouches[0].clientX;
+        const diffX = touchStartX - touchEndX;
+        if (Math.abs(diffX) > 45) { // Swipe threshold
+          if (diffX > 0) {
+            // Swipe para a esquerda -> Próximo slide
+            showResultSlide(currentResultIndex + 1);
+          } else {
+            // Swipe para a direita -> Slide anterior
+            showResultSlide(currentResultIndex - 1);
+          }
+        }
+      }
+      startResultsAutoSlide();
     }, { passive: true });
-  }
-
-  // Single Before & After Showcase (Tufted Headboard)
-  const afterImgEl = document.getElementById('baAfterImg');
-
-  function syncBaDimensions() {
-    if (!baViewer || !afterImgEl) return;
-    afterImgEl.style.width = baViewer.clientWidth + 'px';
-  }
-
-  if (baViewer) {
-    window.addEventListener('resize', syncBaDimensions);
-    setTimeout(syncBaDimensions, 100);
-    syncBaDimensions();
   }
 
   // --- 4. FAQ Accordion ---
