@@ -993,27 +993,29 @@ h1, h2, h3, h4, h5, h6 {
 
 .services-carousel-track {
   display: flex;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  gap: 24px;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  margin: 0 -10px;
+  width: 100%;
 }
 
 .service-slide-item {
   flex: 0 0 100%;
   max-width: 100%;
+  padding: 0 10px;
   box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
   .service-slide-item {
-    flex: 0 0 calc(50% - 12px);
-    max-width: calc(50% - 12px);
+    flex: 0 0 50%;
+    max-width: 50%;
   }
 }
 
 @media (min-width: 1024px) {
   .service-slide-item {
-    flex: 0 0 calc(33.333% - 16px);
-    max-width: calc(33.333% - 16px);
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
   }
 }
 
@@ -2709,4 +2711,57 @@ h1, h2, h3, h4, h5, h6 {
     padding: 8px 10px;
     font-size: 0.82rem;
   }
+
+  /* Services Carousel Mobile Sizing */
+  .services-carousel-wrap {
+    padding: 5px 0 15px;
+  }
+
+  .service-img-wrap {
+    height: 180px;
+  }
+
+  .service-card-title {
+    font-size: 1.15rem;
+  }
+
+  .service-desc {
+    font-size: 0.88rem;
+    margin-bottom: 12px;
+  }
+
+  .services-carousel-controls {
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .services-nav-arrow {
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+  }
+
+  .services-dot-btn {
+    width: 10px;
+    height: 10px;
+  }
+
+  .services-dot-btn.active {
+    width: 24px;
+  }
 }
+
+/* iOS Safe Area & Modern Touch Support */
+@supports (padding: max(0px)) {
+  .mobile-nav-drawer {
+    padding-top: max(24px, env(safe-area-inset-top));
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+    height: 100dvh;
+  }
+
+  .floating-whatsapp {
+    bottom: max(20px, calc(env(safe-area-inset-bottom) + 12px));
+    right: max(16px, calc(env(safe-area-inset-right) + 12px));
+  }
+}
+
