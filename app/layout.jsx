@@ -1,5 +1,12 @@
 import './globals.css';
 
+export const viewport = {
+  themeColor: '#0b2545',
+  width: 'device-width',
+  initialScale: 1.0,
+  maximumScale: 5.0,
+};
+
 export const metadata = {
   title: 'Apollo Carpet & Upholstery Cleaning | Orlando & Central Florida',
   description: 'Professional carpet, sofa, upholstery, mattress, area rug, and house cleaning services in Orlando, Kissimmee, Davenport, Windermere, and Ocoee. Get a free custom quote today!',
@@ -8,8 +15,6 @@ export const metadata = {
   icons: {
     icon: '/assets/images/logo.png',
   },
-  themeColor: '#0b2545',
-  viewport: 'width=device-width, initial-scale=1.0, maximum-scale=5.0',
 };
 
 export default function RootLayout({ children }) {

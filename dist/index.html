@@ -29,6 +29,22 @@
 
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Immediate Language Initialization Script -->
+  <script>
+    (function() {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var urlLang = params.get('lang');
+        var savedLang = (urlLang && ['en', 'es', 'pt'].indexOf(urlLang) !== -1) 
+          ? urlLang 
+          : (localStorage.getItem('apollo_lang') || 'en');
+        if (['en', 'es', 'pt'].indexOf(savedLang) !== -1) {
+          document.documentElement.setAttribute('lang', savedLang);
+        }
+      } catch(e) {}
+    })();
+  </script>
 </head>
 <body>
 
@@ -87,19 +103,6 @@
 
       <!-- Header Actions Right -->
       <div class="header-actions">
-        <!-- Language Switcher Flags -->
-        <div class="lang-switcher-nav" aria-label="Language Selector">
-          <button type="button" class="lang-flag-btn active" data-lang="en" title="English (United States)">
-            <img src="/assets/images/flags/us.svg" alt="USA Flag" class="lang-flag-img">
-          </button>
-          <button type="button" class="lang-flag-btn" data-lang="es" title="Español (España)">
-            <img src="/assets/images/flags/es.svg" alt="Spain Flag" class="lang-flag-img">
-          </button>
-          <button type="button" class="lang-flag-btn" data-lang="pt" title="Português (Brasil)">
-            <img src="/assets/images/flags/br.svg" alt="Brazil Flag" class="lang-flag-img">
-          </button>
-        </div>
-
         <!-- Direct Phone Badge -->
         <a href="tel:+13212725560" class="header-phone-box" title="Direct Phone">
           <div class="phone-icon-circle">
@@ -115,6 +118,19 @@
         <a href="#quote" class="btn btn-primary header-quote-btn">
           <i class="bi bi-calculator"></i> <span data-i18n="nav.getFreeQuote">Get Free Quote</span>
         </a>
+
+        <!-- Language Switcher Flags (Right side of CTA button) -->
+        <div class="lang-switcher-nav" aria-label="Language Selector">
+          <button type="button" class="lang-flag-btn active" data-lang="en" title="English (United States)">
+            <img src="/assets/images/flags/us.svg" alt="USA Flag" class="lang-flag-img">
+          </button>
+          <button type="button" class="lang-flag-btn" data-lang="es" title="Español (España)">
+            <img src="/assets/images/flags/es.svg" alt="Spain Flag" class="lang-flag-img">
+          </button>
+          <button type="button" class="lang-flag-btn" data-lang="pt" title="Português (Brasil)">
+            <img src="/assets/images/flags/br.svg" alt="Brazil Flag" class="lang-flag-img">
+          </button>
+        </div>
 
         <!-- Mobile Phone Icon Only -->
         <a href="tel:+13212725560" class="mobile-call-icon-btn" title="Call Apollo">
@@ -475,7 +491,7 @@
       </div>
 
         <!-- 7. House Cleaning (Full Width / Highlight) -->
-        <article class="service-card" style="grid-column: 1 / -1;">
+        <article class="service-card house-cleaning-card" style="margin-top: 28px;">
           <div class="service-body" style="padding: 30px;">
             <div class="service-icon-title">
               <div class="service-icon-box">

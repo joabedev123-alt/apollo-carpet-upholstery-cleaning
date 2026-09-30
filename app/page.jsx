@@ -176,7 +176,7 @@ export default function HomePage() {
     return () => window.removeEventListener('resize', handleGalleryResize);
   }, []);
 
-  // Services Carousel Auto-slide (every 3.5s)
+  // Services Carousel Auto-slide (every 2.5s)
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isServicesHovered.current) {
@@ -185,11 +185,11 @@ export default function HomePage() {
           return prev >= maxIdx ? 0 : prev + 1;
         });
       }
-    }, 3500);
+    }, 2500);
     return () => clearInterval(interval);
   }, [servicesSlides.length, itemsPerView]);
 
-  // Gallery Carousel Auto-slide (every 3.5s)
+  // Gallery Carousel Auto-slide (every 2.5s)
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isGalleryHovered.current) {
@@ -198,7 +198,7 @@ export default function HomePage() {
           return prev >= maxIdx ? 0 : prev + 1;
         });
       }
-    }, 3500);
+    }, 2500);
     return () => clearInterval(interval);
   }, [gallerySlides.length, galleryItemsPerView]);
 
@@ -361,7 +361,21 @@ export default function HomePage() {
           </nav>
 
           <div className="header-actions">
-            {/* Language Switcher Flags in Navbar */}
+            <a href="tel:+13212725560" className="header-phone-box" title="Direct Phone">
+              <div className="phone-icon-circle">
+                <i className="bi bi-telephone-fill"></i>
+              </div>
+              <div className="phone-meta">
+                <span className="phone-label">{t.nav.callDirect}</span>
+                <span className="phone-number">(321) 272-5560</span>
+              </div>
+            </a>
+
+            <a href="#quote" className="btn btn-primary header-quote-btn">
+              <i className="bi bi-calculator"></i> {t.nav.getFreeQuote}
+            </a>
+
+            {/* Language Switcher Flags in Navbar (Right side of CTA button) */}
             <div className="lang-switcher-nav" aria-label="Language Selector">
               <button
                 type="button"
@@ -388,20 +402,6 @@ export default function HomePage() {
                 <img src="/flags/br.svg" alt="Brazil Flag" className="lang-flag-img" />
               </button>
             </div>
-
-            <a href="tel:+13212725560" className="header-phone-box" title="Direct Phone">
-              <div className="phone-icon-circle">
-                <i className="bi bi-telephone-fill"></i>
-              </div>
-              <div className="phone-meta">
-                <span className="phone-label">{t.nav.callDirect}</span>
-                <span className="phone-number">(321) 272-5560</span>
-              </div>
-            </a>
-
-            <a href="#quote" className="btn btn-primary header-quote-btn">
-              <i className="bi bi-calculator"></i> {t.nav.getFreeQuote}
-            </a>
 
             <a href="tel:+13212725560" className="mobile-call-icon-btn" title="Call Apollo">
               <i className="bi bi-telephone-fill"></i>
@@ -666,14 +666,14 @@ export default function HomePage() {
               <button
                 type="button"
                 className="services-nav-arrow"
-                onClick={() => setCurrentServiceIndex((prev) => (prev <= 0 ? Math.max(0, servicesSlides.length - itemsPerView) : prev - 1))}
+                onClick={() => setCurrentServiceIndex((prev) => (prev <= 0 ? servicesSlides.length - 1 : prev - 1))}
                 aria-label="Previous Services Slide"
               >
                 <i className="bi bi-chevron-left"></i>
               </button>
               
               <div className="services-dots-row">
-                {Array.from({ length: Math.max(1, servicesSlides.length - itemsPerView + 1) }).map((_, idx) => (
+                {servicesSlides.map((_, idx) => (
                   <button
                     key={idx}
                     type="button"
@@ -687,7 +687,7 @@ export default function HomePage() {
               <button
                 type="button"
                 className="services-nav-arrow"
-                onClick={() => setCurrentServiceIndex((prev) => (prev >= servicesSlides.length - itemsPerView ? 0 : prev + 1))}
+                onClick={() => setCurrentServiceIndex((prev) => (prev + 1) % servicesSlides.length)}
                 aria-label="Next Services Slide"
               >
                 <i className="bi bi-chevron-right"></i>
@@ -880,14 +880,14 @@ export default function HomePage() {
               <button
                 type="button"
                 className="gallery-nav-arrow"
-                onClick={() => setCurrentGalleryIndex((prev) => (prev <= 0 ? Math.max(0, gallerySlides.length - galleryItemsPerView) : prev - 1))}
+                onClick={() => setCurrentGalleryIndex((prev) => (prev <= 0 ? gallerySlides.length - 1 : prev - 1))}
                 aria-label="Previous Gallery Slide"
               >
                 <i className="bi bi-chevron-left"></i>
               </button>
 
               <div className="gallery-dots-row">
-                {Array.from({ length: Math.max(1, gallerySlides.length - galleryItemsPerView + 1) }).map((_, idx) => (
+                {gallerySlides.map((_, idx) => (
                   <button
                     key={idx}
                     type="button"
@@ -901,7 +901,7 @@ export default function HomePage() {
               <button
                 type="button"
                 className="gallery-nav-arrow"
-                onClick={() => setCurrentGalleryIndex((prev) => (prev >= gallerySlides.length - galleryItemsPerView ? 0 : prev + 1))}
+                onClick={() => setCurrentGalleryIndex((prev) => (prev + 1) % gallerySlides.length)}
                 aria-label="Next Gallery Slide"
               >
                 <i className="bi bi-chevron-right"></i>

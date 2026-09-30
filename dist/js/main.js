@@ -56,23 +56,44 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // --- Multilingual i18n Controller ---
-  const langButtons = document.querySelectorAll('.lang-flag-btn');
-  let currentLanguage = localStorage.getItem('apollo_lang') || 'en';
+  const urlParams = new URLSearchParams(window.location.search);
+  const paramLang = urlParams.get('lang');
+  let currentLanguage = (paramLang && ['en', 'es', 'pt'].includes(paramLang)) 
+    ? paramLang 
+    : (localStorage.getItem('apollo_lang') || 'en');
+  if (!['en', 'es', 'pt'].includes(currentLanguage)) {
+    currentLanguage = 'en';
+  }
 
   function applyLanguage(lang) {
+    if (!['en', 'es', 'pt'].includes(lang)) {
+      lang = 'en';
+    }
     currentLanguage = lang;
+    
     try {
       localStorage.setItem('apollo_lang', lang);
     } catch (e) {}
 
+    try {
+      const url = new URL(window.location.href);
+      if (url.searchParams.get('lang') !== lang) {
+        url.searchParams.set('lang', lang);
+        window.history.replaceState({}, '', url.toString());
+      }
+    } catch (e) {}
+
     document.documentElement.lang = lang;
 
-    // Atualiza botões ativos
-    langButtons.forEach(btn => {
+    // Atualiza botões ativos em todos os locais (Navbar e Drawer Mobile)
+    const allLangButtons = document.querySelectorAll('.lang-flag-btn');
+    allLangButtons.forEach(btn => {
       if (btn.getAttribute('data-lang') === lang) {
         btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
       } else {
         btn.classList.remove('active');
+        btn.setAttribute('aria-pressed', 'false');
       }
     });
 
@@ -109,9 +130,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const phoneLabel = document.querySelector('.phone-meta .phone-label');
     if (phoneLabel) phoneLabel.textContent = dict.nav.callDirect;
 
-    const navQuoteBtn = document.querySelector('.header-actions .btn-accent');
+    const navQuoteBtn = document.querySelector('.header-actions .header-quote-btn') || document.querySelector('.header-actions .btn-accent') || document.querySelector('.header-actions .btn-primary');
     if (navQuoteBtn) {
-      navQuoteBtn.innerHTML = `<i class="bi bi-clipboard-check"></i> <span>${dict.nav.getFreeQuote}</span>`;
+      navQuoteBtn.innerHTML = `<i class="bi bi-calculator"></i> <span>${dict.nav.getFreeQuote}</span>`;
     }
 
     // Mobile Drawer Links
@@ -169,9 +190,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const servicesSubtitle = document.querySelector('#services .section-subtitle');
     if (servicesSubtitle) servicesSubtitle.textContent = dict.servicesSection.subtitle;
 
-    const serviceCards = document.querySelectorAll('#services .service-card');
+    const carouselServiceCards = document.querySelectorAll('#servicesCarouselTrack .service-card');
     if (dict.servicesSection.services) {
-      serviceCards.forEach((card, idx) => {
+      carouselServiceCards.forEach((card, idx) => {
         const sData = dict.servicesSection.services[idx];
         if (!sData) return;
         const badge = card.querySelector('.service-badge');
@@ -180,13 +201,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (title) title.textContent = sData.title;
         const desc = card.querySelector('.service-desc');
         if (desc) desc.textContent = sData.desc;
-        const featureLis = card.querySelectorAll('.service-features li');
+        const featureLis = card.querySelectorAll('.service-features-list li, .service-features li');
         if (featureLis.length >= 3 && sData.features) {
           featureLis[0].innerHTML = `<i class="bi bi-check2-circle"></i> <span>${sData.features[0]}</span>`;
           featureLis[1].innerHTML = `<i class="bi bi-check2-circle"></i> <span>${sData.features[1]}</span>`;
           featureLis[2].innerHTML = `<i class="bi bi-check2-circle"></i> <span>${sData.features[2]}</span>`;
         }
-        const btnSelect = card.querySelector('.btn-select-service');
+        const btnSelect = card.querySelector('.service-card-btn, .btn-select-service');
         if (btnSelect) {
           btnSelect.innerHTML = `<i class="bi bi-plus-circle"></i> <span>${dict.servicesSection.btnSelect}</span>`;
         }
@@ -197,19 +218,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const houseCard = document.querySelector('.house-cleaning-card');
     if (houseCard && dict.servicesSection.houseCard) {
       const hData = dict.servicesSection.houseCard;
-      const hBadge = houseCard.querySelector('.house-badge');
+      const hBadge = houseCard.querySelector('.service-badge, .house-badge');
       if (hBadge) hBadge.textContent = hData.badge;
-      const hTitle = houseCard.querySelector('.house-card-title');
+      const hTitle = houseCard.querySelector('.service-card-title, .house-card-title');
       if (hTitle) hTitle.textContent = hData.title;
-      const hDesc = houseCard.querySelector('.house-card-desc');
+      const hDesc = houseCard.querySelector('.service-desc, .house-card-desc');
       if (hDesc) hDesc.textContent = hData.desc;
-      const hLis = houseCard.querySelectorAll('.house-features li');
+      const hLis = houseCard.querySelectorAll('.service-features-list li, .house-features li');
       if (hLis.length >= 3 && hData.features) {
         hLis[0].innerHTML = `<i class="bi bi-check2-circle"></i> <span>${hData.features[0]}</span>`;
         hLis[1].innerHTML = `<i class="bi bi-check2-circle"></i> <span>${hData.features[1]}</span>`;
         hLis[2].innerHTML = `<i class="bi bi-check2-circle"></i> <span>${hData.features[2]}</span>`;
       }
-      const hBtn = houseCard.querySelector('.btn-select-house');
+      const hBtn = houseCard.querySelector('button.btn-primary, .btn-select-house');
       if (hBtn) {
         hBtn.innerHTML = `<i class="bi bi-plus-circle"></i> <span>${hData.btnSelect}</span>`;
       }
@@ -430,7 +451,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  langButtons.forEach(btn => {
+  document.querySelectorAll('.lang-flag-btn').forEach(btn => {
     btn.addEventListener('click', function () {
       const selected = this.getAttribute('data-lang');
       if (selected) {
@@ -886,6 +907,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // --- 6. Services Carousel Controller ---
+  // --- 6. Services Carousel Controller ---
   const servicesWrap = document.getElementById('servicesCarouselWrap');
   const servicesTrack = document.getElementById('servicesCarouselTrack');
   const servicesPrevBtn = document.getElementById('servicesPrevBtn');
@@ -894,8 +916,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (servicesWrap && servicesTrack) {
     const slides = servicesTrack.querySelectorAll('.service-slide-item');
+    const totalSlides = slides.length;
     let currentServiceIndex = 0;
     let isServicesHovered = false;
+    let servicesAutoInterval = null;
 
     function getItemsPerView() {
       if (window.innerWidth < 640) return 1;
@@ -905,18 +929,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateServicesCarousel() {
       const itemsPerView = getItemsPerView();
-      const maxIndex = Math.max(0, slides.length - itemsPerView);
+      const maxIndex = Math.max(0, totalSlides - itemsPerView);
+      
       if (currentServiceIndex > maxIndex) {
-        currentServiceIndex = maxIndex;
+        currentServiceIndex = 0;
       }
+
       const itemWidthPercent = 100 / itemsPerView;
       servicesTrack.style.transform = `translateX(-${currentServiceIndex * itemWidthPercent}%)`;
 
-      // Update dots
+      // Atualiza as bolinhas (quantidade correspondente às posições de visualização)
       if (servicesDotsRow) {
         servicesDotsRow.innerHTML = '';
-        const dotCount = maxIndex + 1;
-        for (let i = 0; i < dotCount; i++) {
+        const totalDots = maxIndex + 1;
+        for (let i = 0; i < totalDots; i++) {
           const dot = document.createElement('button');
           dot.type = 'button';
           dot.className = `services-dot-btn ${i === currentServiceIndex ? 'active' : ''}`;
@@ -924,27 +950,58 @@ document.addEventListener('DOMContentLoaded', function () {
           dot.addEventListener('click', () => {
             currentServiceIndex = i;
             updateServicesCarousel();
+            restartServicesAuto();
           });
           servicesDotsRow.appendChild(dot);
         }
       }
     }
 
+    function nextServiceSlide() {
+      const itemsPerView = getItemsPerView();
+      const maxIndex = Math.max(0, totalSlides - itemsPerView);
+      currentServiceIndex = (currentServiceIndex >= maxIndex) ? 0 : currentServiceIndex + 1;
+      updateServicesCarousel();
+    }
+
+    function prevServiceSlide() {
+      const itemsPerView = getItemsPerView();
+      const maxIndex = Math.max(0, totalSlides - itemsPerView);
+      currentServiceIndex = (currentServiceIndex <= 0) ? maxIndex : currentServiceIndex - 1;
+      updateServicesCarousel();
+    }
+
+    function startServicesAuto() {
+      stopServicesAuto();
+      servicesAutoInterval = setInterval(() => {
+        if (!isServicesHovered) {
+          nextServiceSlide();
+        }
+      }, 2500);
+    }
+
+    function stopServicesAuto() {
+      if (servicesAutoInterval) {
+        clearInterval(servicesAutoInterval);
+        servicesAutoInterval = null;
+      }
+    }
+
+    function restartServicesAuto() {
+      startServicesAuto();
+    }
+
     if (servicesPrevBtn) {
       servicesPrevBtn.addEventListener('click', () => {
-        const itemsPerView = getItemsPerView();
-        const maxIndex = Math.max(0, slides.length - itemsPerView);
-        currentServiceIndex = currentServiceIndex <= 0 ? maxIndex : currentServiceIndex - 1;
-        updateServicesCarousel();
+        prevServiceSlide();
+        restartServicesAuto();
       });
     }
 
     if (servicesNextBtn) {
       servicesNextBtn.addEventListener('click', () => {
-        const itemsPerView = getItemsPerView();
-        const maxIndex = Math.max(0, slides.length - itemsPerView);
-        currentServiceIndex = currentServiceIndex >= maxIndex ? 0 : currentServiceIndex + 1;
-        updateServicesCarousel();
+        nextServiceSlide();
+        restartServicesAuto();
       });
     }
 
@@ -961,15 +1018,13 @@ document.addEventListener('DOMContentLoaded', function () {
       isServicesHovered = false;
       if (e.changedTouches && e.changedTouches[0]) {
         const diffX = touchStartX - e.changedTouches[0].clientX;
-        const itemsPerView = getItemsPerView();
-        const maxIndex = Math.max(0, slides.length - itemsPerView);
         if (Math.abs(diffX) > 40) {
           if (diffX > 0) {
-            currentServiceIndex = currentServiceIndex >= maxIndex ? 0 : currentServiceIndex + 1;
+            nextServiceSlide();
           } else {
-            currentServiceIndex = currentServiceIndex <= 0 ? maxIndex : currentServiceIndex - 1;
+            prevServiceSlide();
           }
-          updateServicesCarousel();
+          restartServicesAuto();
         }
       }
     }, { passive: true });
@@ -977,18 +1032,9 @@ document.addEventListener('DOMContentLoaded', function () {
     servicesWrap.addEventListener('mouseenter', () => { isServicesHovered = true; });
     servicesWrap.addEventListener('mouseleave', () => { isServicesHovered = false; });
 
-    // Auto-slide interval
-    setInterval(() => {
-      if (!isServicesHovered) {
-        const itemsPerView = getItemsPerView();
-        const maxIndex = Math.max(0, slides.length - itemsPerView);
-        currentServiceIndex = currentServiceIndex >= maxIndex ? 0 : currentServiceIndex + 1;
-        updateServicesCarousel();
-      }
-    }, 3500);
-
     window.addEventListener('resize', updateServicesCarousel);
     updateServicesCarousel();
+    startServicesAuto();
   }
 
   // --- 7. Real Job Gallery Carousel Controller ---
@@ -1000,8 +1046,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (galleryWrap && galleryTrack) {
     const gallerySlides = galleryTrack.querySelectorAll('.gallery-slide-item');
+    const totalGallerySlides = gallerySlides.length;
     let currentGalleryIndex = 0;
     let isGalleryHovered = false;
+    let galleryAutoInterval = null;
 
     function getGalleryItemsPerView() {
       if (window.innerWidth < 640) return 1;
@@ -1011,18 +1059,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateGalleryCarousel() {
       const itemsPerView = getGalleryItemsPerView();
-      const maxIndex = Math.max(0, gallerySlides.length - itemsPerView);
+      const maxIndex = Math.max(0, totalGallerySlides - itemsPerView);
+      
       if (currentGalleryIndex > maxIndex) {
-        currentGalleryIndex = maxIndex;
+        currentGalleryIndex = 0;
       }
+
       const itemWidthPercent = 100 / itemsPerView;
       galleryTrack.style.transform = `translateX(-${currentGalleryIndex * itemWidthPercent}%)`;
 
-      // Update dots
+      // Atualiza as bolinhas (quantidade correspondente às posições de visualização)
       if (galleryDotsRow) {
         galleryDotsRow.innerHTML = '';
-        const dotCount = maxIndex + 1;
-        for (let i = 0; i < dotCount; i++) {
+        const totalDots = maxIndex + 1;
+        for (let i = 0; i < totalDots; i++) {
           const dot = document.createElement('button');
           dot.type = 'button';
           dot.className = `gallery-dot-btn ${i === currentGalleryIndex ? 'active' : ''}`;
@@ -1030,27 +1080,58 @@ document.addEventListener('DOMContentLoaded', function () {
           dot.addEventListener('click', () => {
             currentGalleryIndex = i;
             updateGalleryCarousel();
+            restartGalleryAuto();
           });
           galleryDotsRow.appendChild(dot);
         }
       }
     }
 
+    function nextGallerySlide() {
+      const itemsPerView = getGalleryItemsPerView();
+      const maxIndex = Math.max(0, totalGallerySlides - itemsPerView);
+      currentGalleryIndex = (currentGalleryIndex >= maxIndex) ? 0 : currentGalleryIndex + 1;
+      updateGalleryCarousel();
+    }
+
+    function prevGallerySlide() {
+      const itemsPerView = getGalleryItemsPerView();
+      const maxIndex = Math.max(0, totalGallerySlides - itemsPerView);
+      currentGalleryIndex = (currentGalleryIndex <= 0) ? maxIndex : currentGalleryIndex - 1;
+      updateGalleryCarousel();
+    }
+
+    function startGalleryAuto() {
+      stopGalleryAuto();
+      galleryAutoInterval = setInterval(() => {
+        if (!isGalleryHovered) {
+          nextGallerySlide();
+        }
+      }, 2500);
+    }
+
+    function stopGalleryAuto() {
+      if (galleryAutoInterval) {
+        clearInterval(galleryAutoInterval);
+        galleryAutoInterval = null;
+      }
+    }
+
+    function restartGalleryAuto() {
+      startGalleryAuto();
+    }
+
     if (galleryPrevBtn) {
       galleryPrevBtn.addEventListener('click', () => {
-        const itemsPerView = getGalleryItemsPerView();
-        const maxIndex = Math.max(0, gallerySlides.length - itemsPerView);
-        currentGalleryIndex = currentGalleryIndex <= 0 ? maxIndex : currentGalleryIndex - 1;
-        updateGalleryCarousel();
+        prevGallerySlide();
+        restartGalleryAuto();
       });
     }
 
     if (galleryNextBtn) {
       galleryNextBtn.addEventListener('click', () => {
-        const itemsPerView = getGalleryItemsPerView();
-        const maxIndex = Math.max(0, gallerySlides.length - itemsPerView);
-        currentGalleryIndex = currentGalleryIndex >= maxIndex ? 0 : currentGalleryIndex + 1;
-        updateGalleryCarousel();
+        nextGallerySlide();
+        restartGalleryAuto();
       });
     }
 
@@ -1067,15 +1148,13 @@ document.addEventListener('DOMContentLoaded', function () {
       isGalleryHovered = false;
       if (e.changedTouches && e.changedTouches[0]) {
         const diffX = touchStartX - e.changedTouches[0].clientX;
-        const itemsPerView = getGalleryItemsPerView();
-        const maxIndex = Math.max(0, gallerySlides.length - itemsPerView);
         if (Math.abs(diffX) > 40) {
           if (diffX > 0) {
-            currentGalleryIndex = currentGalleryIndex >= maxIndex ? 0 : currentGalleryIndex + 1;
+            nextGallerySlide();
           } else {
-            currentGalleryIndex = currentGalleryIndex <= 0 ? maxIndex : currentGalleryIndex - 1;
+            prevGallerySlide();
           }
-          updateGalleryCarousel();
+          restartGalleryAuto();
         }
       }
     }, { passive: true });
@@ -1083,18 +1162,9 @@ document.addEventListener('DOMContentLoaded', function () {
     galleryWrap.addEventListener('mouseenter', () => { isGalleryHovered = true; });
     galleryWrap.addEventListener('mouseleave', () => { isGalleryHovered = false; });
 
-    // Auto-slide interval
-    setInterval(() => {
-      if (!isGalleryHovered) {
-        const itemsPerView = getGalleryItemsPerView();
-        const maxIndex = Math.max(0, gallerySlides.length - itemsPerView);
-        currentGalleryIndex = currentGalleryIndex >= maxIndex ? 0 : currentGalleryIndex + 1;
-        updateGalleryCarousel();
-      }
-    }, 3500);
-
     window.addEventListener('resize', updateGalleryCarousel);
     updateGalleryCarousel();
+    startGalleryAuto();
   }
 
   updateQuoteSummary();

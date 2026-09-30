@@ -7,7 +7,9 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
-const PUBLIC_DIR = path.resolve(__dirname, '..');
+const ROOT_DIR = path.resolve(__dirname, '..');
+const DIST_DIR = path.join(ROOT_DIR, 'dist');
+const PUBLIC_DIR = fs.existsSync(path.join(DIST_DIR, 'index.html')) ? DIST_DIR : ROOT_DIR;
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=UTF-8',
@@ -42,13 +44,26 @@ const server = http.createServer((req, res) => {
   let reqPath = decodeURI(req.url.split('?')[0]);
   if (reqPath === '/') reqPath = '/index.html';
 
-  const filePath = path.join(PUBLIC_DIR, reqPath);
+  let filePath = path.join(PUBLIC_DIR, reqPath);
 
-  // Security: prevent directory traversal
-  if (!filePath.startsWith(PUBLIC_DIR)) {
-    res.writeHead(403, { 'Content-Type': 'text/plain' });
-    res.end('403 Forbidden');
-    return;
+  // Fallback checks across dist, root, public, and assets
+  if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+    const candidates = [
+      path.join(DIST_DIR, reqPath),
+      path.join(ROOT_DIR, reqPath),
+      path.join(DIST_DIR, 'public', reqPath),
+      path.join(ROOT_DIR, 'public', reqPath),
+      path.join(DIST_DIR, 'flags', path.basename(reqPath)),
+      path.join(ROOT_DIR, 'flags', path.basename(reqPath)),
+      path.join(ROOT_DIR, 'assets', 'images', 'flags', path.basename(reqPath))
+    ];
+
+    for (const cand of candidates) {
+      if (fs.existsSync(cand) && fs.statSync(cand).isFile()) {
+        filePath = cand;
+        break;
+      }
+    }
   }
 
   fs.stat(filePath, (err, stats) => {
