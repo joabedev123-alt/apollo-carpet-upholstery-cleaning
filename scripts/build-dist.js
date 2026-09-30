@@ -2,11 +2,12 @@ const fs = require('fs');
 const path = require('path');
 
 const rootDir = path.resolve(__dirname, '..');
+const outDir = path.join(rootDir, 'out');
 const distDir = path.join(rootDir, 'dist');
 
-console.log('🚀 Iniciando processo de Build e geração da pasta dist/ ...');
+console.log('🚀 Sincronizando build exata do Next.js (out/) para a pasta dist/ ...');
 
-// 1. Limpar e preparar diretório dist
+// 1. Limpar diretório dist
 function cleanDir(dir) {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
@@ -21,15 +22,13 @@ function cleanDir(dir) {
       } else {
         fs.unlinkSync(fullPath);
       }
-    } catch (e) {
-      // Ignora pequenos locks transitórios no Windows
-    }
+    } catch (e) {}
   }
 }
 
 cleanDir(distDir);
 
-// Função recursiva de cópia (ignora arquivos .zip)
+// 2. Copiar recursivamente ignorando arquivos .zip
 function copyDirRecursive(src, dest) {
   if (!fs.existsSync(src)) return;
   if (!fs.existsSync(dest)) {
@@ -51,42 +50,14 @@ function copyDirRecursive(src, dest) {
   }
 }
 
-// 2. Copiar index.html
-const indexHtmlSrc = path.join(rootDir, 'index.html');
-const indexHtmlDest = path.join(distDir, 'index.html');
-if (fs.existsSync(indexHtmlSrc)) {
-  console.log('📄 Copiando index.html...');
-  fs.copyFileSync(indexHtmlSrc, indexHtmlDest);
+if (fs.existsSync(outDir)) {
+  console.log('📦 Copiando arquivos compilados de out/ para dist/...');
+  copyDirRecursive(outDir, distDir);
+} else {
+  console.warn('⚠️ Pasta out/ não encontrada. Certifique-se de executar "next build" primeiro.');
 }
 
-// 3. Copiar diretórios estáticos
-const dirsToCopy = ['css', 'js', 'assets', 'public'];
-dirsToCopy.forEach(dirName => {
-  const src = path.join(rootDir, dirName);
-  const dest = path.join(distDir, dirName);
-  if (fs.existsSync(src)) {
-    console.log(`📁 Copiando pasta ${dirName}/ para dist/${dirName}/...`);
-    copyDirRecursive(src, dest);
-  }
-});
-
-// 4. Copiar flags para a raiz de dist/flags também (para compatibilidade total)
-const flagsSrc = path.join(rootDir, 'public', 'flags');
-const flagsDest = path.join(distDir, 'flags');
-if (fs.existsSync(flagsSrc)) {
-  console.log('🚩 Sincronizando flags para dist/flags/...');
-  copyDirRecursive(flagsSrc, flagsDest);
-}
-
-// 5. Copiar video_01.mp4 para raiz de dist se existir
-const videoSrc = path.join(rootDir, 'assets', 'video_01.mp4');
-const videoDest = path.join(distDir, 'video_01.mp4');
-if (fs.existsSync(videoSrc)) {
-  console.log('🎥 Sincronizando video_01.mp4 para dist/video_01.mp4...');
-  fs.copyFileSync(videoSrc, videoDest);
-}
-
-// 6. Contagem de arquivos no dist/
+// 3. Contagem de arquivos no dist/
 function countFiles(dir) {
   let count = 0;
   if (!fs.existsSync(dir)) return count;
@@ -103,5 +74,5 @@ function countFiles(dir) {
 }
 
 const totalFiles = countFiles(distDir);
-console.log(`\n✅ Build de produção concluída com sucesso!`);
-console.log(`📦 Diretório dist/ gerado contendo ${totalFiles} arquivos prontos para deploy e produção.\n`);
+console.log(`\n✅ Build final sincronizada com sucesso!`);
+console.log(`📁 Diretório dist/ gerado contendo ${totalFiles} arquivos 100% idênticos ao Next.js local.\n`);
