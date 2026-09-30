@@ -666,14 +666,17 @@ export default function HomePage() {
               <button
                 type="button"
                 className="services-nav-arrow"
-                onClick={() => setCurrentServiceIndex((prev) => (prev <= 0 ? servicesSlides.length - 1 : prev - 1))}
+                onClick={() => {
+                  const maxIdx = Math.max(0, servicesSlides.length - itemsPerView);
+                  setCurrentServiceIndex((prev) => (prev <= 0 ? maxIdx : prev - 1));
+                }}
                 aria-label="Previous Services Slide"
               >
                 <i className="bi bi-chevron-left"></i>
               </button>
               
               <div className="services-dots-row">
-                {servicesSlides.map((_, idx) => (
+                {Array.from({ length: Math.max(0, servicesSlides.length - itemsPerView) + 1 }).map((_, idx) => (
                   <button
                     key={idx}
                     type="button"
@@ -687,7 +690,10 @@ export default function HomePage() {
               <button
                 type="button"
                 className="services-nav-arrow"
-                onClick={() => setCurrentServiceIndex((prev) => (prev + 1) % servicesSlides.length)}
+                onClick={() => {
+                  const maxIdx = Math.max(0, servicesSlides.length - itemsPerView);
+                  setCurrentServiceIndex((prev) => (prev >= maxIdx ? 0 : prev + 1));
+                }}
                 aria-label="Next Services Slide"
               >
                 <i className="bi bi-chevron-right"></i>
@@ -880,14 +886,17 @@ export default function HomePage() {
               <button
                 type="button"
                 className="gallery-nav-arrow"
-                onClick={() => setCurrentGalleryIndex((prev) => (prev <= 0 ? gallerySlides.length - 1 : prev - 1))}
+                onClick={() => {
+                  const maxIdx = Math.max(0, gallerySlides.length - galleryItemsPerView);
+                  setCurrentGalleryIndex((prev) => (prev <= 0 ? maxIdx : prev - 1));
+                }}
                 aria-label="Previous Gallery Slide"
               >
                 <i className="bi bi-chevron-left"></i>
               </button>
 
               <div className="gallery-dots-row">
-                {gallerySlides.map((_, idx) => (
+                {Array.from({ length: Math.max(0, gallerySlides.length - galleryItemsPerView) + 1 }).map((_, idx) => (
                   <button
                     key={idx}
                     type="button"
@@ -901,7 +910,10 @@ export default function HomePage() {
               <button
                 type="button"
                 className="gallery-nav-arrow"
-                onClick={() => setCurrentGalleryIndex((prev) => (prev + 1) % gallerySlides.length)}
+                onClick={() => {
+                  const maxIdx = Math.max(0, gallerySlides.length - galleryItemsPerView);
+                  setCurrentGalleryIndex((prev) => (prev >= maxIdx ? 0 : prev + 1));
+                }}
                 aria-label="Next Gallery Slide"
               >
                 <i className="bi bi-chevron-right"></i>
